@@ -6,5 +6,3 @@ ReactDOM.render(
     <Test />,
     document.getElementById('app')
 );
-
-console.log('app.js is running');

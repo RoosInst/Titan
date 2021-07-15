@@ -1,11 +1,10 @@
 import React from 'react';
-
+import TestTable from './TestTable';
 export default class Test extends React.Component {
     render() {
+        console.log('Test is running');
         return (
-            <div>
-                <h1>Test</h1>
-            </div>
+            <TestTable />
         );
     }  
 };
