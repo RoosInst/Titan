@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable } from 'react-table';
 
-function TestTable() {
+function BuildTable() {
     const data = React.useMemo (
         () => [
             {
@@ -126,4 +126,4 @@ function TestTable() {
     )
 }
 
-export default TestTable;
+export default BuildTable;

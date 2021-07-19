@@ -1,13 +1,13 @@
 import React from 'react';
-import TestTable from './TestTable';
+import BuildTable from './BuildTable';
 import FileData from './FileData';
-export default class Test extends React.Component {
+export default class App extends React.Component {
     render() {
-        console.log('Test is running');
+        console.log('App is running');
         return (
             <div>
                 <FileData />,
-                <TestTable />
+                <BuildTable />
             </div>
         );
     }  
