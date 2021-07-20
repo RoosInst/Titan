@@ -32,7 +32,6 @@ export default class FileDate extends React.Component {
     render() {
         return (
             <div>
-                <p>test</p>
                 <input type='file' id='input' />
             </div>
         )
