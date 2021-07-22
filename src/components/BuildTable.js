@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { useTable } from 'react-table';
 
-function BuildTable() {
+function BuildTable(props) {
     const data = React.useMemo (
         () => [
             {
@@ -39,7 +41,7 @@ function BuildTable() {
         ],
         []
     )
-
+    console.info('in BuildTable: ', props.data2)
     const columns = React.useMemo (
         () => [
             {
@@ -77,7 +79,6 @@ function BuildTable() {
         rows,
         prepareRow,
     } = useTable({ columns, data })
-
     return (
         <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
        <thead>
@@ -126,4 +127,10 @@ function BuildTable() {
     )
 }
 
-export default BuildTable;
+function mapStateToProps(state) {
+  return { 
+      data2: state.data
+  }
+}
+
+export default connect(mapStateToProps, { })(BuildTable);
