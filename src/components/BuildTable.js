@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { useTable } from 'react-table';
 
 function BuildTable(props) {

@@ -37,8 +37,6 @@ class FileData extends React.Component {
     render() {
         return (
             <div>
-            
-                <p>test</p>
                 <input type='file' id='input' />
             </div>
         )
