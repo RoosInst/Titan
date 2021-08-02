@@ -3,36 +3,36 @@ import { connect } from 'react-redux';
 import { useTable } from 'react-table';
 
 function BuildTable(props) {
-    //const data = mapStateToProps().data;
-    const data = React.useMemo(
-      () => [
-        {
-          sequence: "test",
-          entityId: "hello",
-          indexId: "1234",
-          name: "12",
-          value: "12",
-          value2: "123456",
-        },
-        {
-          sequence: "100",
-          entityId: "123456",
-          indexId: "1000",
-          name: "1002",
-          value: "222",
-          value2: "1234567",
-        },
-        {
-          sequence: "1020123210",
-          entityId: "12093823",
-          indexId: "128972387",
-          name: "1283723",
-          value: "1283218",
-          value2: "1287362",
-        },
-      ],
-      []
-    )
+    const data = mapStateToProps().data;
+      // const data = React.useMemo(
+      //   () => [
+      //     {
+      //       sequence: "test",
+      //       entityId: "hello",
+      //       indexId: "1234",
+      //       name: "12",
+      //       value: "12",
+      //       value2: "123456",
+      //     },
+      //     {
+      //       sequence: "100",
+      //       entityId: "123456",
+      //       indexId: "1000",
+      //       name: "1002",
+      //       value: "222",
+      //       value2: "1234567",
+      //     },
+      //     {
+      //       sequence: "1020123210",
+      //       entityId: "12093823",
+      //       indexId: "128972387",
+      //       name: "1283723",
+      //       value: "1283218",
+      //       value2: "1287362",
+      //     },
+      //   ],
+      //   []
+      // )
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
     
@@ -126,7 +126,24 @@ function mapStateToProps(state) {
   if(state === undefined)
   {
     return {
-      data: []
+      data: [
+        {
+          sequence: "1020123210",
+          entityId: "12093823",
+          indexId: "128972387",
+          name: "1283723",
+          value: "1283218",
+          value2: "1287362",
+        },
+        {
+          sequence: "1020123210",
+          entityId: "12093823",
+          indexId: "128972387",
+          name: "1283723",
+          value: "1283218",
+          value2: "1287362",
+        },
+      ]
     }
   }
   else {
