@@ -3,9 +3,39 @@ import { connect } from 'react-redux';
 import { useTable } from 'react-table';
 
 function BuildTable(props) {
-    const data = mapStateToProps().data;
+    //const data = mapStateToProps().data;
+    const data = React.useMemo(
+      () => [
+        {
+          sequence: "test",
+          entityId: "hello",
+          indexId: "1234",
+          name: "12",
+          value: "12",
+          value2: "123456",
+        },
+        {
+          sequence: "100",
+          entityId: "123456",
+          indexId: "1000",
+          name: "1002",
+          value: "222",
+          value2: "1234567",
+        },
+        {
+          sequence: "1020123210",
+          entityId: "12093823",
+          indexId: "128972387",
+          name: "1283723",
+          value: "1283218",
+          value2: "1287362",
+        },
+      ],
+      []
+    )
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
+    
     const columns = React.useMemo (
         () => [
             {
@@ -44,7 +74,7 @@ function BuildTable(props) {
         prepareRow,
     } = useTable({ columns, data })
     return (
-        <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+        <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
        <thead>
          {headerGroups.map(headerGroup => (
            <tr {...headerGroup.getHeaderGroupProps()}>
@@ -52,10 +82,11 @@ function BuildTable(props) {
                <th
                  {...column.getHeaderProps()}
                  style={{
-                   borderBottom: 'solid 3px black',
-                   background: 'aliceblue',
-                   color: 'black',
-                   fontWeight: 'bold',
+                   borderBottom: 'solid 2px #2e353d',
+                   background: '#2e353d',
+                   color: '#e1ffff',
+                   fontWeight: 'normal',
+                   fontFamily: 'Helvetica, Arial, sans-serif'
                  }}
                >
                  {column.render('Header')}

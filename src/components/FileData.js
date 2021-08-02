@@ -37,6 +37,7 @@ class FileData extends React.Component {
     render() {
         return (
             <div>
+                <label htmlFor='input' className="add-file">Upload Database</label>
                 <input type='file' id='input' />
             </div>
         )

@@ -10,11 +10,21 @@ module.exports = {
         
     },
     module: {
-        rules: [{
+        rules: [
+        {
             loader: 'babel-loader',
             test: /\.js$/,
             exclude: /node_modules/
-        }]
+        },
+        {
+            test: /\.css$/,
+            use: ["style-loader","css-loader"],
+        },
+        {
+            test: /\.scss$/,
+            use: ["style-loader","css-loader","sass-loader"],
+        },
+    ],
     },
     devServer: {
         contentBase: path.join(__dirname, 'public')
