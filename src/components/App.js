@@ -6,7 +6,7 @@ export default class App extends React.Component {
         console.log('App is running');
         return (
             <div>
-                <FileData />,
+                <FileData />
                 <BuildTable />
             </div>
         );

@@ -3,44 +3,9 @@ import { connect } from 'react-redux';
 import { useTable } from 'react-table';
 
 function BuildTable(props) {
-    const data = React.useMemo (
-        () => [
-            {
-                sequence: 'Test',
-                entityId: 'Data',
-                indexId: 'That',
-                name: 'Will',
-                value: 'Be',
-                value2: 'Read',
-            },
-            {
-                sequence: 'In',
-                entityId: 'From',
-                indexId: 'A',
-                name: 'SQLite',
-                value: 'Or',
-                value2: 'DB',
-            },
-            {
-                sequence: 'File',
-                entityId: 'To',
-                indexId: 'Find',
-                name: 'A',
-                value: 'Lot',
-                value2: 'Of',
-            },
-            {
-                sequence: 'Important',
-                entityId: 'Information',
-                indexId: '',
-                name: '',
-                value: '',
-                value2: '',
-            },
-        ],
-        []
-    )
-    console.info('in BuildTable: ', props.data2)
+    const data = mapStateToProps().data;
+    console.info('after', data);
+    //console.info('in BuildTable: ', props.data2)
     const columns = React.useMemo (
         () => [
             {
@@ -127,8 +92,17 @@ function BuildTable(props) {
 }
 
 function mapStateToProps(state) {
-  return { 
-      data2: state.data
+  if(state === undefined)
+  {
+    return {
+      data: []
+    }
+  }
+  else {
+    console.log('in func',state.data);
+    return {
+      data: state.data
+    }
   }
 }
 
