@@ -4,35 +4,6 @@ import { useTable } from 'react-table';
 
 function BuildTable(props) {
     const data = mapStateToProps().data;
-      // const data = React.useMemo(
-      //   () => [
-      //     {
-      //       sequence: "test",
-      //       entityId: "hello",
-      //       indexId: "1234",
-      //       name: "12",
-      //       value: "12",
-      //       value2: "123456",
-      //     },
-      //     {
-      //       sequence: "100",
-      //       entityId: "123456",
-      //       indexId: "1000",
-      //       name: "1002",
-      //       value: "222",
-      //       value2: "1234567",
-      //     },
-      //     {
-      //       sequence: "1020123210",
-      //       entityId: "12093823",
-      //       indexId: "128972387",
-      //       name: "1283723",
-      //       value: "1283218",
-      //       value2: "1287362",
-      //     },
-      //   ],
-      //   []
-      // )
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
     
@@ -86,7 +57,8 @@ function BuildTable(props) {
                    background: '#2e353d',
                    color: '#e1ffff',
                    fontWeight: 'normal',
-                   fontFamily: 'Helvetica, Arial, sans-serif'
+                   fontFamily: 'Helvetica, Arial, sans-serif',
+                   padding: '8px',
                  }}
                >
                  {column.render('Header')}
@@ -105,7 +77,7 @@ function BuildTable(props) {
                    <td
                      {...cell.getCellProps()}
                      style={{
-                       padding: '10px',
+                       padding: '6px',
                        border: 'solid 1px black',
                        background: 'white',
                      }}
@@ -128,20 +100,28 @@ function mapStateToProps(state) {
     return {
       data: [
         {
-          sequence: "1020123210",
-          entityId: "12093823",
-          indexId: "128972387",
-          name: "1283723",
-          value: "1283218",
-          value2: "1287362",
+          sequence: "--",
+          entityId: "--",
+          indexId: "--",
+          name: "--",
+          value: "--",
+          value2: "--",
         },
         {
-          sequence: "1020123210",
-          entityId: "12093823",
-          indexId: "128972387",
-          name: "1283723",
-          value: "1283218",
-          value2: "1287362",
+          sequence: "--",
+          entityId: "--",
+          indexId: "--",
+          name: "--",
+          value: "--",
+          value2: "--",
+        },
+        {
+          sequence: "--",
+          entityId: "--",
+          indexId: "--",
+          name: "--",
+          value: "--",
+          value2: "--",
         },
       ]
     }
