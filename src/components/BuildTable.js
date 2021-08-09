@@ -77,9 +77,11 @@ function BuildTable(props) {
                    <td
                      {...cell.getCellProps()}
                      style={{
-                       padding: '6px',
+                       padding: '2px',
                        border: 'solid 1px black',
                        background: 'white',
+                       fontFamily: 'Helvetica, Arial, sans-serif',
+                       fontWeight: 'normal',
                      }}
                    >
                      {cell.render('Cell')}
