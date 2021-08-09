@@ -43,10 +43,10 @@ function BuildTable(props) {
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({ columns, data })
+    } = useTable({ columns, data, globalFilter: String })
     return (
-        <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
-       <thead>
+      <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
+      <thead>
          {headerGroups.map(headerGroup => (
            <tr {...headerGroup.getHeaderGroupProps()}>
              {headerGroup.headers.map(column => (
