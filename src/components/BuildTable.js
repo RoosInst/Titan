@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useTable } from 'react-table';
 
 function BuildTable(props) {
-    const data = mapStateToProps().data;
+    const data = props.data;
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
     
@@ -95,42 +95,9 @@ function BuildTable(props) {
 }
 
 function mapStateToProps(state) {
-  if(state === undefined)
-  {
-    return {
-      data: [
-        {
-          sequence: "--",
-          entityId: "--",
-          indexId: "--",
-          name: "--",
-          value: "--",
-          value2: "--",
-        },
-        {
-          sequence: "--",
-          entityId: "--",
-          indexId: "--",
-          name: "--",
-          value: "--",
-          value2: "--",
-        },
-        {
-          sequence: "--",
-          entityId: "--",
-          indexId: "--",
-          name: "--",
-          value: "--",
-          value2: "--",
-        },
-      ]
-    }
-  }
-  else {
-    console.log('in func',state.data);
-    return {
-      data: state.data
-    }
+  console.log('in func',state.data);
+  return {
+    data: state.data
   }
 }
 
