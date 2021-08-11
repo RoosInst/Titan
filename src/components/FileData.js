@@ -38,7 +38,7 @@ class FileData extends React.Component {
         return (
             <div>
                 <label htmlFor='input' className="add-file">Click here to upload database</label>
-                <input type='file' id='input' />
+                <input type='file' id='input' accept='.sqlite' />
             </div>
         )
     }
