@@ -4,7 +4,7 @@
   "maine": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev-server": "webpack serve"
+    "dev-server": "webpack server"
   },
   "dependencies": {
     "@babel/cli": "^7.0.0",
