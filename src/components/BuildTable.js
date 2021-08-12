@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useTable } from 'react-table';
+import { useTable, useGlobalFilter } from 'react-table';
+import GlobalFilter from './GlobalFilter'
 
 function BuildTable(props) {
     const data = props.data;
@@ -43,8 +44,13 @@ function BuildTable(props) {
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({ columns, data, globalFilter: String })
+        state,
+        setGlobalFilter,
+    } = useTable({ columns, data, globalFilter }, useGlobalFilter)
+    const { globalFilter } = state
     return (
+      <>
+      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
       <thead>
          {headerGroups.map(headerGroup => (
@@ -93,6 +99,7 @@ function BuildTable(props) {
          })}
        </tbody>
      </table>
+     </>
     )
 }
 

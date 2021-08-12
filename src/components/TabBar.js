@@ -1,7 +1,6 @@
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import BuildTable from './BuildTable';
-import SearchBar from './SearchBar';
 import 'react-tabs/style/react-tabs.scss';
 
 export default () => (
@@ -25,7 +24,6 @@ export default () => (
     </TabList>
 
     <TabPanel>
-      <SearchBar />
       <BuildTable />
     </TabPanel>
     <TabPanel>
