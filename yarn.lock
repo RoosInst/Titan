@@ -5686,10 +5686,10 @@
   dependencies:
     "extend-shallow" "^3.0.0"
 
-"sql.js@^1.5.0":
-  "integrity" "sha512-Qqr6HgX/hCDpLFWdN0BNoNpYQ2c1tOl1c3HGI0cshjaFSAWszKICuLZ9CyFUvRFPpEGW8RzHzwuXWWvXVGTKBg=="
-  "resolved" "https://registry.npmjs.org/sql.js/-/sql.js-1.5.0.tgz"
-  "version" "1.5.0"
+"sql.js@^1.6.1":
+  "integrity" "sha512-mQTboXfaaYsqG6leg2tYHppHPShHFDP+vtPjyTBrOCM//8XvnK/OfVYQahS3g6ArvO2a6lvBsHy8w/qZ9a12DQ=="
+  "resolved" "https://registry.npmjs.org/sql.js/-/sql.js-1.6.1.tgz"
+  "version" "1.6.1"
 
 "sshpk@^1.7.0":
   "integrity" "sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg=="

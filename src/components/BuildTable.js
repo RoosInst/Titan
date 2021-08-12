@@ -1,38 +1,52 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useTable, useGlobalFilter } from 'react-table';
-import GlobalFilter from './GlobalFilter'
+import { useTable, useGlobalFilter, useFilters, useFlexLayout } from 'react-table';
+import GlobalFilter from './GlobalFilter';
+import ColumnFilter from './ColumnFilter';
 
 function BuildTable(props) {
     const data = props.data;
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
+
+    const defaultColumn = React.useMemo(
+      () => ({
+        width: 1,
+      }),
+      []
+    )
     
     const columns = React.useMemo (
         () => [
             {
                 Header: 'sequence',
                 accessor: 'sequence',
+                Filter: ColumnFilter,
             },
             {
                 Header: 'entityId',
                 accessor: 'entityId',
+                Filter: ColumnFilter,
             },
             {
                 Header: 'indexId',
                 accessor: 'indexId',
+                Filter: ColumnFilter,
             },
             {
                 Header: 'name',
                 accessor: 'name',
+                Filter: ColumnFilter,
             },
             {
                 Header: 'value',
                 accessor: 'value',
+                Filter: ColumnFilter,
             },
             {
                 Header: 'value2',
                 accessor: 'value2',
+                Filter: ColumnFilter,
             },
         ],
         []
@@ -46,28 +60,22 @@ function BuildTable(props) {
         prepareRow,
         state,
         setGlobalFilter,
-    } = useTable({ columns, data, globalFilter }, useGlobalFilter)
+    } = useTable({ columns, data, defaultColumn, globalFilter }, useFilters, useGlobalFilter, useFlexLayout)
     const { globalFilter } = state
     return (
       <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-      <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
-      <thead>
+      <table {...getTableProps()} className='whole-table' >
+      <thead >
          {headerGroups.map(headerGroup => (
            <tr {...headerGroup.getHeaderGroupProps()}>
              {headerGroup.headers.map(column => (
                <th
                  {...column.getHeaderProps()}
-                 style={{
-                   borderBottom: 'solid 2px #2e353d',
-                   background: '#2e353d',
-                   color: '#e1ffff',
-                   fontWeight: 'normal',
-                   fontFamily: 'Helvetica, Arial, sans-serif',
-                   padding: '8px',
-                 }}
+                 className='table-header'
                >
                  {column.render('Header')}
+                 <div>{column.canFilter ? column.render('Filter') : null}</div>
                </th>
              ))}
            </tr>
@@ -82,13 +90,7 @@ function BuildTable(props) {
                  return (
                    <td
                      {...cell.getCellProps()}
-                     style={{
-                       padding: '2px',
-                       border: 'solid 1px black',
-                       background: 'white',
-                       fontFamily: 'Helvetica, Arial, sans-serif',
-                       fontWeight: 'normal',
-                     }}
+                     className='table-body'
                    >
                      {cell.render('Cell')}
                    </td>
