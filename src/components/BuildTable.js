@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useTable, useGlobalFilter, useFilters, useFlexLayout } from 'react-table';
+import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination } from 'react-table';
 import GlobalFilter from './GlobalFilter';
 import ColumnFilter from './ColumnFilter';
 
@@ -56,12 +56,18 @@ function BuildTable(props) {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        rows,
+        page,
+        nextPage,
+        previousPage,
+        canNextPage,
+        canPreviousPage,
+        pageOptions,
         prepareRow,
         state,
         setGlobalFilter,
-    } = useTable({ columns, data, defaultColumn, globalFilter }, useFilters, useGlobalFilter, useFlexLayout)
-    const { globalFilter } = state
+    } = useTable({ columns, data, defaultColumn, globalFilter }, useFilters, useGlobalFilter, usePagination, useFlexLayout)
+    const { globalFilter, pageIndex } = state
+
     return (
       <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -82,7 +88,7 @@ function BuildTable(props) {
          ))}
        </thead>
        <tbody {...getTableBodyProps()}>
-         {rows.map(row => {
+         {page.map(row => {
            prepareRow(row)
            return (
              <tr {...row.getRowProps()}>
@@ -101,6 +107,16 @@ function BuildTable(props) {
          })}
        </tbody>
      </table>
+     <div> 
+         <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+         </span>
+         <button onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
+         <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
+     </div>
      </>
     )
 }
