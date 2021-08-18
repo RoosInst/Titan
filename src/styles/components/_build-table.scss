@@ -25,3 +25,19 @@
 .search-bar {
     width: 100%;
 }
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.controls1 {
+    display: flex;
+}
+
+.spaceright {
+    padding-right: 6px;
+}
