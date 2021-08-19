@@ -19,8 +19,8 @@ class FileData extends React.Component {
                  console.info('hello')
                  let Uints = new Uint8Array(evt.target.result);
                  initSqlJs().then((SQL) => {
-                    let db = new SQL.Database(Uints);
-                    console.log('connected')
+                      let db = new SQL.Database(Uints);
+                      console.log('connected')
 
                     let res = db.exec("SELECT * FROM ritdb1");
                     this.props.updateData(res);
