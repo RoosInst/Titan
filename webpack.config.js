@@ -3,7 +3,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 module.exports = {
-    entry: './src/RunApp.js',
+    entry: ["regenerator-runtime/runtime.js","./src/RunApp.js"],
     mode: 'development',
     output: {
         path: path.join(__dirname, 'public'),
