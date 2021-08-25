@@ -1,6 +1,6 @@
 import React from 'react';
 import 'regenerator-runtime/runtime';
-import FileData from './FileData';
+import FileObject from './FileObject';
 import TabBar from './TabBar';
 import Spinner from './Spinner';
 import './../styles/styles.scss';
@@ -29,7 +29,7 @@ export default class App extends React.Component {
         else {
             return (
                 <div>
-                    <FileData />
+                    <FileObject />
                     <TabBar />
                 </div>
             );

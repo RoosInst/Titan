@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination } from 'react-table';
 import GlobalFilter from './GlobalFilter';
+import Part from './Part';
+import PartInfo from './PartInfo';
 import ColumnFilter from './ColumnFilter';
 
 function BuildTable(props) {
-    let data = props.data;
+    let data = props.data;//TableData(props.db);
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
 
@@ -18,36 +20,114 @@ function BuildTable(props) {
     
     const columns = React.useMemo (
         () => [
-            {
-                Header: 'sequence',
-                accessor: 'sequence',
-                Filter: ColumnFilter,
-            },
-            {
-                Header: 'entityId',
-                accessor: 'entityId',
-                Filter: ColumnFilter,
-            },
-            {
-                Header: 'indexId',
-                accessor: 'indexId',
-                Filter: ColumnFilter,
-            },
-            {
-                Header: 'name',
-                accessor: 'name',
-                Filter: ColumnFilter,
-            },
-            {
-                Header: 'value',
-                accessor: 'value',
-                Filter: ColumnFilter,
-            },
-            {
-                Header: 'value2',
-                accessor: 'value2',
-                Filter: ColumnFilter,
-            },
+          {
+            Header: () => (<PartInfo />),
+            accessor: 'PartInfo',
+            columns: [
+              {
+                Header: 'testNum',
+                accessor: 'testNum',
+              },
+              {
+                Header: 'testName',
+                accessor: 'testName',
+              },
+              {
+                Header: 'units',
+                accessor: 'units',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part0',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data0',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part1',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data1',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part2',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data2',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part3',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data3',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part4',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data4',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part5',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data5',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part6',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data6',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part7',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data7',
+              },
+            ]
+          },
+          {
+            Header: () => (<Part />),
+            accessor: 'part8',
+            columns: [
+              {
+                Header: 'data',
+                accessor: 'data8',
+              },
+            ]
+          }
         ],
         []
     )
@@ -84,7 +164,6 @@ function BuildTable(props) {
                  className='table-header'
                >
                  {column.render('Header')}
-                 <div>{column.canFilter ? column.render('Filter') : null}</div>
                </th>
              ))}
            </tr>
@@ -154,6 +233,7 @@ function BuildTable(props) {
 function mapStateToProps(state) {
   console.log('in func',state.data);
   return {
+    db: state.db,
     data: state.data
   }
 }
