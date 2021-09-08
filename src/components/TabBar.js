@@ -2,6 +2,7 @@ import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import BuildTable from './BuildTable';
 import Statistics from './Statistics';
+import GraphedData from './GraphedData';
 import 'react-tabs/style/react-tabs.scss';
 
 export default () => (
@@ -21,7 +22,7 @@ export default () => (
       <Tab style={{
         color: '#2e353d',
         fontFamily: 'Helvetica, Arial, sans-serif'
-      }}>Future Content 2</Tab>
+      }}>Graphs</Tab>
     </TabList>
 
     <TabPanel>
@@ -31,7 +32,7 @@ export default () => (
       <Statistics />
     </TabPanel>
     <TabPanel>
-        <h2>Future Content 2</h2>
+      <GraphedData />
     </TabPanel>
   </Tabs>
 );

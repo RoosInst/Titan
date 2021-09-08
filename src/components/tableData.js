@@ -26,10 +26,10 @@ export default function (db, updateData) {
             // if(i == 2916) {
                 // testIndex = db.exec(`SELECT indexId from ritdb1 WHERE EntityId='${i}' AND name='R' AND (value2='PV' OR value2='FV')`)[0].values;
                 
-            testNames = db.exec(`SELECT trim(value) from ritdb1 WHERE name='RESULT_NAME' GROUP BY trim(value)`)
+            testNames = db.exec(`SELECT trim(value) from ritdb1 WHERE name='RESULT_NAME' GROUP BY trim(value)`);
             // }
         // }
-        console.log('tests', test)
+        console.log('tests', test);
 
         console.log('test results', testResults);
          //console.log('test results', testResults);
