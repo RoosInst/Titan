@@ -1,4 +1,3 @@
-import { array } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useTable, useFlexLayout, usePagination } from 'react-table';
@@ -7,35 +6,15 @@ function Statistics(props) {
         if(props.db.db != undefined)
         {
             const db = props.db;
-            let allData = db.exec(`SELECT value FROM ritdb1 WHERE name='R' AND value2='PV' OR value2='FV'`);
-            console.log(allData);
-            let min = allData[0].values[0], max = allData[0].values[0], std;
-            let passData = db.exec(`SELECT value FROM ritdb1 WHERE value='PASS' AND name='PF'`);
-            let failData = db.exec(`SELECT value FROM ritdb1 WHERE value='FAIL' AND name='PF'`);
-            passData = passData[0].values.length;
-            failData = failData[0].values.length;
+            let passData = parseInt(db.exec(`SELECT COUNT(*) FROM ritdb1 WHERE value='PASS' AND name='PF'`)[0].values);
+            let failData = parseInt(db.exec(`SELECT COUNT(*) FROM ritdb1 WHERE value='FAIL' AND name='PF'`)[0].values);
+            let min = db.exec(`SELECT MIN(value) FROM ritdb1 WHERE name='R' AND value2='PV' OR value2='FV'`)[0].values;
+            let max = db.exec(`SELECT MAX(value) FROM ritdb1 WHERE name='R' AND value2='PV' OR value2='FV'`)[0].values;
+            let mean = db.exec(`SELECT AVG(value) FROM ritdb1 WHERE name='R' AND value2='PV' OR value2='FV'`)[0].values;
+            let std = db.exec(`SELECT STDEV(value) FROM ritdb1 WHERE name='R' AND value2='PV' OR value2='FV'`)[0].values;
             let totalTest = passData + failData;
             let ppass = (passData/totalTest)*100;
             let pfail = (failData/totalTest)*100;
-            var i,j,total = 0, mean = 0, diffSqredArr = [];
-            for(i=0;i<allData[0].values.length;i+=1){
-                total+=parseFloat(allData[0].values[i]);
-                if(allData[0].values[i] > max)
-                {
-                    max = allData[0].values[i];
-                }
-                if(allData[0].values[i] < min)
-                {
-                    min = allData[0].values[i];
-                }
-            }
-            mean = total/allData[0].values.length;
-            for(j=0;j<allData[0].values.length;j+=1){
-                diffSqredArr.push(Math.pow((allData[0].values[j]-mean),2));
-            }
-            std = Math.sqrt(diffSqredArr.reduce(function(firstEl, nextEl){
-                return firstEl + nextEl;
-            })/allData[0].values.length);
             const defaultColumn = React.useMemo(
                 () => ({
                   width: 1,
@@ -51,8 +30,8 @@ function Statistics(props) {
                         PFail: pfail.toFixed(1),
                         Min: min,
                         Max: max,
-                        Mean: mean.toFixed(3),
-                        STD: std.toFixed(3),
+                        Mean: mean,
+                        STD: std,
                     },
                 ],
                 []
