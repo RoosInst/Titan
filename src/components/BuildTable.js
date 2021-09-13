@@ -5,11 +5,39 @@ import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
 import ColumnFilter from './ColumnFilter';
+import { updateData, nextPart } from '../actions';
 
 function BuildTable(props) {
     let data = props.data;//TableData(props.db);
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
+
+    const onClick = () => {
+      console.log(props);
+      const { testNames, testResults, partNumbers, currentPart, db, data } = props;
+      console.log(testResults);
+      let newEntry = db.exec(`SELECT value, indexId FROM ritdb1 WHERE EntityId='${partNumbers[0].values[currentPart][0]}' AND name='R';`);
+      console.log("newEntry", newEntry);
+      console.log(data);
+      let newData = [];
+      for(let j = 0; j < testNames[0].values.length; j++) {
+        newData.push({
+            testName: testNames[0].values[j][0],
+            data0: data[j].data1,
+            data1: data[j].data2,
+            data2: data[j].data3,
+            data3: data[j].data4,
+            data4: data[j].data5,
+            data5: data[j].data6,
+            data6: data[j].data7,
+            data7: data[j].data8,
+            data8: newEntry[0].values[j][0],
+        });
+      }
+      console.log(data);
+      props.updateData(newData);
+      props.nextPart();
+    }
 
     const defaultColumn = React.useMemo(
       () => ({
@@ -153,6 +181,7 @@ function BuildTable(props) {
 
     return (
       <>
+      <button onClick={() => onClick()}>Next Part</button>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()} className='whole-table' >
       <thead >
@@ -234,8 +263,12 @@ function mapStateToProps(state) {
   console.log('in func',state.data);
   return {
     db: state.db,
-    data: state.data.formatted_data
+    data: state.data.formatted_data,
+    testResults: state.data.test_results,
+    testNames: state.data.test_names,
+    partNumbers: state.data.part_numbers,
+    currentPart: state.data.currentPart,
   }
 }
 
-export default connect(mapStateToProps, { })(BuildTable);
+export default connect(mapStateToProps, { updateData, nextPart })(BuildTable);
