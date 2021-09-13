@@ -234,7 +234,7 @@ function mapStateToProps(state) {
   console.log('in func',state.data);
   return {
     db: state.db,
-    data: state.data
+    data: state.data.formatted_data
   }
 }
 
