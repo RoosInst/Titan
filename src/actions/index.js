@@ -22,12 +22,13 @@ export function updateData(data) { //generic send action to reducers (used for M
     }
   }
 
-  export function addTest(numbers, results, names, partsID) { 
+  export function addTest(numbers, results, names, partsID, result) { 
     return {
       type: 'ADD_TEST',
       part_numbers: numbers,
       test_results: results,
       test_names: names,
       parts_id: partsID,
+      result: result,
     }
   }

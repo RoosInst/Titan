@@ -14,6 +14,7 @@ let currentPart = 0;
 let testUnits = [];
 let testNumber = [];
 let partsID = [];
+let result = [];
 class FileObject extends React.Component {
     componentDidMount() {
                 
@@ -66,6 +67,9 @@ class FileObject extends React.Component {
 
                         partsID = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value`);
                         console.log("part id", partsID);
+
+                        result = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PF'`);
+                        console.log("part result", result);
                         // }
                     // }
                     console.log('tests', test)
@@ -73,7 +77,7 @@ class FileObject extends React.Component {
                     console.log('test results', testResults);
                     //console.log('test results', testResults);
                     //console.log('test index', testIndex);
-                    this.props.addTest(test, testResults, testNames, partsID);
+                    this.props.addTest(test, testResults, testNames, partsID, result);
                     console.log('test names', testNames);
 
                     for(let j = 0; j < testNames[0].values.length; j++) {

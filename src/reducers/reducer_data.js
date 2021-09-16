@@ -30,6 +30,7 @@ test_names: [],
 test_results: [],
 part_numbers: [],
 parts_id: [],
+result: [],
 currentPart: 9,
 };
 export default function(state = default_state, action) {
@@ -39,7 +40,7 @@ export default function(state = default_state, action) {
     case NEXT_PART:
       return {...state, currentPart: state.currentPart + 1}
     case 'ADD_TEST':
-      return {...state, test_names: action.test_names, test_results: action.test_results, part_numbers: action.part_numbers, parts_id: action.parts_id}
+      return {...state, test_names: action.test_names, test_results: action.test_results, part_numbers: action.part_numbers, parts_id: action.parts_id, result: action.result}
     default:
       return (
         state

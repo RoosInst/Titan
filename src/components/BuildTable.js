@@ -43,8 +43,6 @@ function BuildTable(props) {
       props.updateData(newData);
       props.nextPart();
     }
-    if(partID[0] != undefined)
-      console.log("idpart",partID[0].values[currentPart][0])
 
     const defaultColumn = React.useMemo(
       () => ({
