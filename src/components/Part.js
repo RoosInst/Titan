@@ -1,16 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class Part extends React.Component {
-    state = {Number: 0,Result: 0,Test: 0,Cycle: 0,Site: 0};
+class Part extends React.Component {
     render() {
         return (
             <div>
-                <p>{this.props.Number}</p>
-                <p>{this.props.Result}</p>
-                <p>{this.props.Test}</p>
-                <p>{this.props.Cycle}</p>
-                <p>{this.props.Site}</p>
+                <p>{this.props.partId}</p>
+                
             </div>
         )
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    const { partNum } = ownProps;
+    return {
+        partId: state.data.parts_id[0] ? state.data.parts_id[0].values[partNum][0] : 'Nothing'
+    }
+    
+};
+
+export default connect(mapStateToProps)(Part);

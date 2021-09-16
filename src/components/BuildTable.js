@@ -11,6 +11,7 @@ function BuildTable(props) {
     let data = props.data;//TableData(props.db);
     let partID = props.parts_id;
     let  currentPart = props.currentPart;
+    console.log('currentPart', currentPart)
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
 
@@ -73,7 +74,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-9} />),
             accessor: 'part0',
             columns: [
               {
@@ -83,7 +84,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-8} />),
             accessor: 'part1',
             columns: [
               {
@@ -93,7 +94,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-7} />),
             accessor: 'part2',
             columns: [
               {
@@ -103,7 +104,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-6} />),
             accessor: 'part3',
             columns: [
               {
@@ -113,7 +114,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-5} />),
             accessor: 'part4',
             columns: [
               {
@@ -123,7 +124,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-4} />),
             accessor: 'part5',
             columns: [
               {
@@ -133,7 +134,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-3} />),
             accessor: 'part6',
             columns: [
               {
@@ -143,7 +144,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-2} />),
             accessor: 'part7',
             columns: [
               {
@@ -153,7 +154,7 @@ function BuildTable(props) {
             ]
           },
           {
-            Header: () => (<Part Number='Number' Result='Result' Test='Test' Cycle='Cycle' Site='Site' />),
+            Header: () => (<Part partNum={currentPart-1} />),
             accessor: 'part8',
             columns: [
               {
@@ -163,7 +164,7 @@ function BuildTable(props) {
             ]
           }
         ],
-        []
+        [props.currentPart]
     )
 
     const {
