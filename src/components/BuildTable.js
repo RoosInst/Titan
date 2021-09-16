@@ -9,6 +9,8 @@ import { updateData, nextPart } from '../actions';
 
 function BuildTable(props) {
     let data = props.data;//TableData(props.db);
+    let partID = props.parts_id;
+    let  currentPart = props.currentPart;
     console.info('after', data);
     //console.info('in BuildTable: ', props.data2)
 
@@ -23,6 +25,8 @@ function BuildTable(props) {
       for(let j = 0; j < testNames[0].values.length; j++) {
         newData.push({
             testName: testNames[0].values[j][0],
+            units: data[j].units,
+            testNum: data[j].testNum,
             data0: data[j].data1,
             data1: data[j].data2,
             data2: data[j].data3,
@@ -38,6 +42,8 @@ function BuildTable(props) {
       props.updateData(newData);
       props.nextPart();
     }
+    if(partID[0] != undefined)
+      console.log("idpart",partID[0].values[currentPart][0])
 
     const defaultColumn = React.useMemo(
       () => ({
@@ -268,6 +274,7 @@ function mapStateToProps(state) {
     testNames: state.data.test_names,
     partNumbers: state.data.part_numbers,
     currentPart: state.data.currentPart,
+    parts_id: state.data.parts_id,
   }
 }
 

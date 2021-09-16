@@ -11,6 +11,9 @@ let testResults = {};
 let test;
 let data =[];
 let currentPart = 0;
+let testUnits = [];
+let testNumber = [];
+let partsID = [];
 class FileObject extends React.Component {
     componentDidMount() {
                 
@@ -48,7 +51,21 @@ class FileObject extends React.Component {
                         // if(i == 2916) {
                             // testIndex = db.exec(`SELECT indexId from ritdb1 WHERE EntityId='${i}' AND name='R' AND (value2='PV' OR value2='FV')`)[0].values;
                             
-                        testNames = db.exec(`SELECT trim(value) from ritdb1 WHERE name='RESULT_NAME' GROUP BY trim(value)`)
+                        testNames = db.exec(`SELECT trim(value), entityID from ritdb1 WHERE name='RESULT_NAME' GROUP BY trim(value)`);
+                        testNames[0].values.sort((first, sec) => {
+                            return first[1] - sec[1];
+                        });
+
+                        testNumber = db.exec(`SELECT trim(value), entityID from ritdb1 WHERE name='RESULT_NUMBER' GROUP BY trim(value)`);
+                        testNumber[0].values.sort((first, sec) => {
+                            return first[1] - sec[1];
+                        });
+
+                        testUnits = db.exec(`SELECT value from ritdb1 WHERE name='RESULT_UNITS_LABEL'`)
+                        console.log("units",testUnits)
+
+                        partsID = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value`);
+                        console.log("part id", partsID);
                         // }
                     // }
                     console.log('tests', test)
@@ -56,12 +73,14 @@ class FileObject extends React.Component {
                     console.log('test results', testResults);
                     //console.log('test results', testResults);
                     //console.log('test index', testIndex);
-                    this.props.addTest(test, testResults, testNames);
+                    this.props.addTest(test, testResults, testNames, partsID);
                     console.log('test names', testNames);
 
                     for(let j = 0; j < testNames[0].values.length; j++) {
                         data.push({
                             testName: testNames[0].values[j][0],
+                            units: testUnits[0].values[j][0],
+                            testNum: testNumber[0].values[j][0],
                             data0: testResults[0].values[j][0],
                             data1: testResults[1].values[j][0],
                             data2: testResults[2].values[j][0],
