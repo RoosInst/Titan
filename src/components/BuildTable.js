@@ -4,7 +4,6 @@ import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination } f
 import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
-import ColumnFilter from './ColumnFilter';
 import { updateData, nextPart } from '../actions';
 
 function BuildTable(props) {
@@ -13,6 +12,7 @@ function BuildTable(props) {
     let  currentPart = props.currentPart;
     console.log('currentPart', currentPart)
     console.info('after', data);
+
     //console.info('in BuildTable: ', props.data2)
 
     const onClick = () => {

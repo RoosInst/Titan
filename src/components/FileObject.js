@@ -15,6 +15,9 @@ let testUnits = [];
 let testNumber = [];
 let partsID = [];
 let result = [];
+let testTime = [];
+let cycleTime = [];
+let site = [];
 class FileObject extends React.Component {
     componentDidMount() {
                 
@@ -70,6 +73,15 @@ class FileObject extends React.Component {
 
                         result = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PF'`);
                         console.log("part result", result);
+
+                        testTime = db.exec(`SELECT value, entityID from ritdb1 WHERE name='EVENT_TEST_TIME'`);
+                        console.log("test time", testTime);
+
+                        cycleTime = db.exec(`SELECT value, entityID from ritdb1 WHERE name='EVENT_CYCLE_TIME'`);
+                        console.log("cycle time", cycleTime);
+
+                        site = db.exec(`SELECT value, entityID from ritdb1 WHERE name='SITE_ID'`);
+                        console.log("site", site);
                         // }
                     // }
                     console.log('tests', test)
@@ -77,7 +89,7 @@ class FileObject extends React.Component {
                     console.log('test results', testResults);
                     //console.log('test results', testResults);
                     //console.log('test index', testIndex);
-                    this.props.addTest(test, testResults, testNames, partsID, result);
+                    this.props.addTest(test, testResults, testNames, partsID, result, testTime, cycleTime, site);
                     console.log('test names', testNames);
 
                     for(let j = 0; j < testNames[0].values.length; j++) {

@@ -31,6 +31,9 @@ test_results: [],
 part_numbers: [],
 parts_id: [],
 result: [],
+testTime: [],
+cycleTime: [],
+site: [],
 currentPart: 9,
 };
 export default function(state = default_state, action) {
@@ -40,7 +43,7 @@ export default function(state = default_state, action) {
     case NEXT_PART:
       return {...state, currentPart: state.currentPart + 1}
     case 'ADD_TEST':
-      return {...state, test_names: action.test_names, test_results: action.test_results, part_numbers: action.part_numbers, parts_id: action.parts_id, result: action.result}
+      return {...state, test_names: action.test_names, test_results: action.test_results, part_numbers: action.part_numbers, parts_id: action.parts_id, result: action.result, testTime: action.testTime, cycleTime: action.cycleTime, site: action.site}
     default:
       return (
         state
