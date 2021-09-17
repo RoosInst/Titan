@@ -5,6 +5,7 @@ import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
 import { updateData, nextPart } from '../actions';
+import { CSVLink } from 'react-csv';
 
 function BuildTable(props) {
     let data = props.data;//TableData(props.db);
@@ -187,6 +188,7 @@ function BuildTable(props) {
     return (
       <>
       <button onClick={() => onClick()}>Next Part</button>
+      <CSVLink data={data}>Download CSV</CSVLink>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()} className='whole-table' >
       <thead >
