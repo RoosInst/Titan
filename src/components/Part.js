@@ -5,11 +5,11 @@ class Part extends React.Component {
     render() {
         return (
             <div>
-                <p>{this.props.partId}</p>
-                <p>{this.props.result}</p>
-                <p>{this.props.testTime}</p>
-                <p>{this.props.cycleTime}</p>
-                <p>{this.props.site}</p>
+                <p>{this.props.partNumber}</p>
+                <p>{this.props.partOverallResult}</p>
+                <p>{this.props.partTestTime}</p>
+                <p>{this.props.partCycleTime}</p>
+                <p>{this.props.partSite}</p>
             </div>
         )
     }
@@ -18,13 +18,12 @@ class Part extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     const { partNum } = ownProps;
     return {
-        partId: state.data.parts_id[0] ? state.data.parts_id[0].values[partNum][0] : '--',
-        result: state.data.result[0] ? state.data.result[0].values[partNum][0] : '--',
-        testTime: state.data.testTime[0] ? state.data.testTime[0].values[partNum][0] : '--',
-        cycleTime: state.data.cycleTime[0] ? state.data.cycleTime[0].values[partNum][0] : '--',
-        site: state.data.site[0] ? state.data.site[0].values[partNum][0] : '--',
+        partNumber: state.headerData.partNumbers[0] ? state.headerData.partNumbers[0].values[partNum][0] : '--',
+        partOverallResult: state.headerData.partOverallResult[0] ? state.headerData.partOverallResult[0].values[partNum][0] : '--',
+        partTestTime: state.headerData.partTestTime[0] ? state.headerData.partTestTime[0].values[partNum][0] : '--',
+        partCycleTime: state.headerData.partCycleTime[0] ? state.headerData.partCycleTime[0].values[partNum][0] : '--',
+        partSite: state.headerData.partSite[0] ? state.headerData.partSite[0].values[partNum][0] : '--',
     }
-    
 };
 
 export default connect(mapStateToProps)(Part);

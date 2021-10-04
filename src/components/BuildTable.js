@@ -4,168 +4,132 @@ import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination } f
 import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
-import { updateData, nextPart } from '../actions';
+import { nextPart } from '../actions/tableData';
+import { nextHeader } from '../actions/headerData';
 import { CSVLink } from 'react-csv';
 
 function BuildTable(props) {
-    let data = props.data;//TableData(props.db);
+    let data = props.tableData;//TableData(props.db);
     let partID = props.parts_id;
-    let  currentPart = props.currentPart;
-    console.log('currentPart', currentPart)
+    
     console.info('after', data);
 
     //console.info('in BuildTable: ', props.data2)
 
     const onClick = () => {
-      console.log(props);
-      const { testNames, testResults, partNumbers, currentPart, db, data } = props;
-      console.log(testResults);
-      let newEntry = db.exec(`SELECT value, indexId FROM ritdb1 WHERE EntityId='${partNumbers[0].values[currentPart][0]}' AND name='R';`);
-      console.log("newEntry", newEntry);
-      console.log(data);
-      let newData = [];
-      for(let j = 0; j < testNames[0].values.length; j++) {
-        newData.push({
-            testName: testNames[0].values[j][0],
-            units: data[j].units,
-            testNum: data[j].testNum,
-            data0: data[j].data1,
-            data1: data[j].data2,
-            data2: data[j].data3,
-            data3: data[j].data4,
-            data4: data[j].data5,
-            data5: data[j].data6,
-            data6: data[j].data7,
-            data7: data[j].data8,
-            data8: newEntry[0].values[j][0],
-        });
-      }
-      console.log(data);
-      props.updateData(newData);
-      props.nextPart();
+      const { db, nextPartNumber, nextPart, nextHeader } = props;
+      let start = performance.now();
+      // Current Time: 360 - 370
+      console.log(nextPartNumber);
+      // let test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+      // test.step();
+      // console.log(test.get());
+      let test = db.prepare(`SELECT value from ritdb1 WHERE name='PF' AND entityID='2906'`);
+      test.step();
+      console.log(test.get());
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_TEST_TIME' AND entityID='2906'`);
+      test.step();
+      console.log(test.get());
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_CYCLE_TIME' AND entityID='2906'`);
+      test.step();
+      console.log(test.get());
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='SITE_ID' AND entityID='2906'`);
+      test.step();
+      console.log(test.get());
+      
+
+      // let newPartNumber = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+      // console.log(newPartNumber);
+      // let newPartTestResult = db.exec(`SELECT value FROM ritdb1 WHERE entityID='${newPartNumber[0].values[0][1]}' AND name='R' limit 10;`);
+      // console.log('newPartInfo', newPartTestResult)
+    
+      // let result = db.exec(`SELECT value from ritdb1 WHERE name='PF' AND entityID='${newPartNumber[0].values[0][1]}'`);
+      // let newHeaderData = {
+      //   newPartNumber,
+      //   newPartOverallResult: db.exec(`SELECT value from ritdb1 WHERE name='PF' AND entityID='${newPartNumber[0].values[0][1]}'`),
+      //   newPartTestTime: db.exec(`SELECT value from ritdb1 WHERE name='EVENT_TEST_TIME' AND entityID='${newPartNumber[0].values[0][1]}'`),
+      //   newPartCycleTime: db.exec(`SELECT value from ritdb1 WHERE name='EVENT_CYCLE_TIME' AND entityID='${newPartNumber[0].values[0][1]}'`),
+      //   newPartSite: db.exec(`SELECT value from ritdb1 WHERE name='SITE_ID' AND entityID='${newPartNumber[0].values[0][1]}'`),
+      // }
+      let end = performance.now();
+      console.log('FIRST TOOK ', (end - start));
+      // nextPart(newPartTestResult);
+      // nextHeader(newHeaderData);
+      
+      
+      // console.log(props);
+      // const { testNames, testResults, partNumbers, currentPart, db, data } = props;
+      // console.log(testResults);
+      // let newEntry = db.exec(`SELECT value, indexId FROM ritdb1 WHERE EntityId='${partNumbers[0].values[currentPart][0]}' AND name='R';`);
+      // console.log("newEntry", newEntry);
+      // console.log(data);
+      // let newData = [];
+      // for(let j = 0; j < testNames[0].values.length; j++) {
+      //   newData.push({
+      //       testName: testNames[0].values[j][0],
+      //       units: data[j].units,
+      //       testNum: data[j].testNum,
+      //       data0: data[j].data1,
+      //       data1: data[j].data2,
+      //       data2: data[j].data3,
+      //       data3: data[j].data4,
+      //       data4: data[j].data5,
+      //       data5: data[j].data6,
+      //       data6: data[j].data7,
+      //       data7: data[j].data8,
+      //       data8: newEntry[0].values[j][0],
+      //   });
+      // }
+      // console.log(data);
+      // props.updateData(newData);
+      // props.nextPart();
     }
 
-    const defaultColumn = React.useMemo(
-      () => ({
+    const defaultColumn = React.useMemo(() => ({
         width: 1,
-      }),
-      []
-    )
+    }), [])
     
-    const columns = React.useMemo (
-        () => [
+    const columns = React.useMemo(() => {
+      let columnContents = [];
+      columnContents.push(
+        {
+          Header: () => (<PartInfo />),
+          accessor: 'PartInfo',
+          columns: [
+            {
+              Header: 'testNum',
+              accessor: 'testNum',
+            },
+            {
+              Header: 'testName',
+              accessor: 'testName',
+            },
+            {
+              Header: 'units',
+              accessor: 'units',
+            },
+          ]
+        }
+      );
+      let  nextPartNumber = props.nextPartNumber;
+      for(let x=0; x < 10; x++) {
+        columnContents.push(
           {
-            Header: () => (<PartInfo />),
-            accessor: 'PartInfo',
-            columns: [
-              {
-                Header: 'testNum',
-                accessor: 'testNum',
-              },
-              {
-                Header: 'testName',
-                accessor: 'testName',
-              },
-              {
-                Header: 'units',
-                accessor: 'units',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-9} />),
-            accessor: 'part0',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data0',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-8} />),
-            accessor: 'part1',
+            Header: () => (<Part partNum={x} />),
+            accessor: `part${x}`,
             columns: [
               {
                 Header: 'data',
-                accessor: 'data1',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-7} />),
-            accessor: 'part2',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data2',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-6} />),
-            accessor: 'part3',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data3',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-5} />),
-            accessor: 'part4',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data4',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-4} />),
-            accessor: 'part5',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data5',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-3} />),
-            accessor: 'part6',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data6',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-2} />),
-            accessor: 'part7',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data7',
-              },
-            ]
-          },
-          {
-            Header: () => (<Part partNum={currentPart-1} />),
-            accessor: 'part8',
-            columns: [
-              {
-                Header: 'data',
-                accessor: 'data8',
+                accessor: `data${nextPartNumber - (10 - x)}`,
               },
             ]
           }
-        ],
-        [props.currentPart]
-    )
+        );
+      }
 
+      return columnContents
+    }, [props.nextPartNumber]);
+       
     const {
         getTableProps,
         getTableBodyProps,
@@ -183,7 +147,7 @@ function BuildTable(props) {
         state,
         setGlobalFilter,
     } = useTable({ columns, data, defaultColumn, globalFilter }, useFilters, useGlobalFilter, usePagination, useFlexLayout)
-    const { globalFilter, pageIndex, pageSize } = state
+    const { globalFilter, pageIndex, pageSize } = state;
 
     return (
       <>
@@ -270,13 +234,9 @@ function mapStateToProps(state) {
   console.log('in func',state.data);
   return {
     db: state.db,
-    data: state.data.formatted_data,
-    testResults: state.data.test_results,
-    testNames: state.data.test_names,
-    partNumbers: state.data.part_numbers,
-    currentPart: state.data.currentPart,
-    parts_id: state.data.parts_id,
+    tableData: state.tableData.formattedData,
+    nextPartNumber: state.tableData.nextPartNumber
   }
 }
 
-export default connect(mapStateToProps, { updateData, nextPart })(BuildTable);
+export default connect(mapStateToProps, { nextPart, nextHeader })(BuildTable);
