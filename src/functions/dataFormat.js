@@ -21,24 +21,24 @@ const formatInitialData = (tableData) => {
 }
 
 const formatNextPart = (partNumber, oldTableData, newTableData) => {
-    //let newData = [];
+    let newData = [];
     for(let j = 0; j < oldTableData.length; j++) {
-        delete oldTableData[j][`data${partNumber-10}`];
-        oldTableData[j][`data${partNumber}`] = newTableData[0].values[j][0];
-        // newData.push({
-        //     testName: oldTableData[j].testName,
-        //     units: oldTableData[j].units,
-        //     testNum: oldTableData[j].testNum,
-        //     data0: oldTableData[j].data1,
-        //     data1: oldTableData[j].data2,
-        //     data2: oldTableData[j].data3,
-        //     data3: oldTableData[j].data4,
-        //     data4: oldTableData[j].data5,
-        //     data5: oldTableData[j].data6,
-        //     data6: oldTableData[j].data7,
-        //     data7: oldTableData[j].data8,
-        //     data8: newTableData[0].values[j][0],
-        // });
+        // delete oldTableData[j][`data${partNumber-10}`];
+        // oldTableData[j][`data${partNumber}`] = newTableData[0].values[j][0];
+        newData.push({
+            testName: oldTableData[j].testName,
+            units: oldTableData[j].units,
+            testNum: oldTableData[j].testNum,
+            data0: oldTableData[j].data1,
+            data1: oldTableData[j].data2,
+            data2: oldTableData[j].data3,
+            data3: oldTableData[j].data4,
+            data4: oldTableData[j].data5,
+            data5: oldTableData[j].data6,
+            data6: oldTableData[j].data7,
+            data7: oldTableData[j].data8,
+            data8: newTableData[0].values[j][0],
+        });
     }
     return oldTableData;
 }
@@ -46,7 +46,7 @@ const formatNextPart = (partNumber, oldTableData, newTableData) => {
 const formatNextHeader = (oldHeaderData, newHeaderData) => {
     console.log('oldHeader', oldHeaderData)
     oldHeaderData.partNumbers[0].values.shift();
-    oldHeaderData.partNumbers[0].values.push(newHeaderData.newPartNumber[0].values[0]);
+    oldHeaderData.partNumbers[0].values.push(newHeaderData.newPartNumber);
     console.log('newHeader', oldHeaderData);
     return oldHeaderData;
 }

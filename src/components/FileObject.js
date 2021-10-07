@@ -52,6 +52,10 @@ class FileObject extends React.Component {
                     // end = performance.now();
                     // console.log('SECOND TOOK ', (end - start));
 
+                    console.log("table name", db.exec("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name"));
+                    db.exec("CREATE INDEX resultIndex ON ritdb1(name, entityID)");
+
+
                     let testNames = db.exec(`SELECT value, entityID from ritdb1 WHERE name='RESULT_NAME' limit 10`);
                     console.log('testNames', testNames)
                     // testNames[0].values.sort((first, sec) => {

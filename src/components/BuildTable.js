@@ -21,22 +21,48 @@ function BuildTable(props) {
       let start = performance.now();
       // Current Time: 360 - 370
       console.log(nextPartNumber);
-      // let test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+      //console.log("results", db.exec(`SELECT value FROM ritdb1 WHERE name='R' AND EntityId='2912'`));
+      let test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+      test.step();
+      let nextPartNumberResult = test.get()[1];
+      console.log(nextPartNumberResult)
+
+      // test = db.prepare(`SELECT value FROM ritdb1 WHERE name='R' AND entityID='${nextPartNumberResult}'`);
       // test.step();
-      // console.log(test.get());
-      let test = db.prepare(`SELECT value from ritdb1 WHERE name='PF' AND entityID='2906'`);
+      let nextPartTestResults = db.exec(`SELECT value FROM ritdb1 WHERE name='R' AND entityID='${nextPartNumberResult}' limit 10`);
+      console.log(nextPartTestResults);
+
+      //console.log(nextPart);
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='PF' AND entityID='${nextPartNumberResult}'`);
       test.step();
-      console.log(test.get());
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_TEST_TIME' AND entityID='2906'`);
+      let nextPartResult = test.get();
+      console.log(nextPartResult);
+      //console.log(test.get());
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_TEST_TIME' AND entityID='${nextPartNumberResult}'`);
       test.step();
-      console.log(test.get());
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_CYCLE_TIME' AND entityID='2906'`);
+      let nextPartTestTime = test.get();
+
+      //console.log(test.get());
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_CYCLE_TIME' AND entityID='${nextPartNumberResult}'`);
       test.step();
-      console.log(test.get());
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='SITE_ID' AND entityID='2906'`);
+      let nextPartCycleTime = test.get();
+
+      //console.log(test.get());
+      test = db.prepare(`SELECT value from ritdb1 WHERE name='SITE_ID' AND entityID='${nextPartNumberResult}'`);
       test.step();
-      console.log(test.get());
+      let nextPartSiteId = test.get();
+      //console.log(test.get());
       
+      nextPart(nextPartTestResults);
+      let newHeaderData = {
+        nextPartNumber,
+        newPartNumber: nextPartNumberResult[0],
+        newPartOverallResult: nextPartResult[0],
+        newPartTestTime: nextPartTestTime[0],
+        newPartCycleTime: nextPartCycleTime[0],
+        newPartSite: nextPartSiteId[0]
+      };
+      nextHeader(newHeaderData);
 
       // let newPartNumber = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
       // console.log(newPartNumber);
