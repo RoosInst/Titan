@@ -52,8 +52,8 @@ function BuildTable(props) {
       test.step();
       let nextPartSiteId = test.get();
       //console.log(test.get());
-      
       nextPart(nextPartTestResults);
+
       let newHeaderData = {
         nextPartNumber,
         newPartNumber: nextPartNumberResult[0],
@@ -139,6 +139,9 @@ function BuildTable(props) {
       );
       let  nextPartNumber = props.nextPartNumber;
       for(let x=0; x < 10; x++) {
+        
+        let newNumber = `data${nextPartNumber - (10 - x)}`;
+        console.log(newNumber);
         columnContents.push(
           {
             Header: () => (<Part partNum={x} />),
@@ -146,13 +149,12 @@ function BuildTable(props) {
             columns: [
               {
                 Header: 'data',
-                accessor: `data${nextPartNumber - (10 - x)}`,
+                accessor: newNumber,
               },
             ]
           }
         );
       }
-
       return columnContents
     }, [props.nextPartNumber]);
        
