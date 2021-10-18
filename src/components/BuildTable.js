@@ -4,7 +4,8 @@ import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination } f
 import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
-import { initializeData, nextPart } from '../actions/tableData';
+import Scrollbar from './Scrollbar';
+import { nextPart } from '../actions/tableData';
 import { nextHeader } from '../actions/headerData';
 import { CSVLink } from 'react-csv';
 import { compose } from 'redux';
@@ -163,8 +164,7 @@ function BuildTable(props) {
     }), [])
     
     const columns = React.useMemo(() => {
-      let columnContents = [];
-      columnContents.push(
+      let headerData =
         {
           Header: () => (<PartInfo />),
           accessor: 'PartInfo',
@@ -182,14 +182,12 @@ function BuildTable(props) {
               accessor: 'units',
             },
           ]
-        }
-      );
-      let  nextPartNumber = props.nextPartNumber;
+        };
+
+      let dataColumns = [];
       for(let x=0; x < 10; x++) {
-        
-        let newNumber = `data${nextPartNumber - (10 - x)}`;
-        console.log(newNumber);
-        columnContents.push(
+        let newNumber = `data${props.nextPartNumber - (10 - x)}`;
+        dataColumns.push(
           {
             Header: () => (<Part partNum={x} />),
             accessor: `part${x}`,
@@ -202,7 +200,14 @@ function BuildTable(props) {
           }
         );
       }
-      return columnContents
+
+      let dataObject = 
+        {
+          Header: () => <Scrollbar />,
+          accessor: "scrollbar",
+          columns: dataColumns
+        };
+      return [headerData, dataObject];
     }, [props.nextPartNumber]);
        
     const {
