@@ -223,8 +223,8 @@ function BuildTable(props) {
 
     return (
       <>
-      <button onClick={() => onClick()}>Next Part</button>
       <button>Previous Part</button>
+      <button onClick={() => onClick()}>Next Part</button>
       <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()} className='whole-table' >
