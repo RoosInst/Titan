@@ -21,7 +21,7 @@ function BuildTable(props) {
 
     const getData = () => {
       let newData = "",i;
-      const { partNumbers, partOverallResult, partTestTime, partCycleTime, partSite } = props;
+      const { partNumbers, partOverallResult, partTestTime, partCycleTime, partSite, nextPartNumber } = props;
       let Device = ",,Device,";
       let Result= ",,Result,";
       let TestTime= ",,Test Time,";
@@ -50,11 +50,9 @@ function BuildTable(props) {
             Site = Site.concat(",")
           if(data[i] != undefined)
           {
-            dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i].data1 + "," + data[i].data2 + "," + data[i].data3 + "," + data[i].data4 + "," + data[i].data5 + "," + data[i].data6 + "," + data[i].data7 + "," + data[i].data8 + "," + data[i].data9 + "," + data[i].data10;
-            console.log("dataHold: ",dataHold[i]);
+            dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i][`data${nextPartNumber - 10}`] + "," + data[i][`data${nextPartNumber - 9}`] + "," + data[i][`data${nextPartNumber - 8}`] + "," + data[i][`data${nextPartNumber - 7}`] + "," + data[i][`data${nextPartNumber - 6}`] + "," + data[i][`data${nextPartNumber - 5}`] + "," + data[i][`data${nextPartNumber - 4}`] + "," + data[i][`data${nextPartNumber - 3}`] + "," + data[i][`data${nextPartNumber - 2}`] + "," + data[i][`data${nextPartNumber - 1}`];
           }
         }
-        console.log("String: ",dataHold[0]);
         newData = Device + "\n" + Result + "\n" + TestTime + "\n" + CycleTime + "\n" + Site + "\n" + Titles;
         for(i=0;i<10;i++)
         {
