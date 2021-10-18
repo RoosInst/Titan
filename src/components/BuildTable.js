@@ -4,9 +4,11 @@ import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination } f
 import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
-import { nextPart } from '../actions/tableData';
+import { initializeData, nextPart } from '../actions/tableData';
 import { nextHeader } from '../actions/headerData';
 import { CSVLink } from 'react-csv';
+import { compose } from 'redux';
+import tableData from './tableData';
 
 function BuildTable(props) {
     let data = props.tableData;//TableData(props.db);
@@ -15,6 +17,53 @@ function BuildTable(props) {
     console.info('after', data);
 
     //console.info('in BuildTable: ', props.data2)
+
+    const getData = () => {
+      let newData = "",i;
+      const { partNumbers, partOverallResult, partTestTime, partCycleTime, partSite } = props;
+      let Device = ",,Device,";
+      let Result= ",,Result,";
+      let TestTime= ",,Test Time,";
+      let CycleTime = ",,Cycle Time,";
+      let Site = ",,Site,";
+      let Titles = "Test Name,Units,Test Number,Data 1,Data 2,Data 3,Data 4,Data 5,Data 6,Data 7,Data 8,Data 9,Data 10";
+      let dataHold = [];
+      if(partNumbers[0] != undefined)
+      {
+        for(i=0;i<10;i++)
+        {
+          Device = Device.concat(partNumbers[0].values[i][0]);
+          if(i != 9)
+            Device = Device.concat(",")
+          Result = Result.concat(partOverallResult[0].values[i][0]);
+          if(i != 9)
+            Result = Result.concat(",")
+          TestTime = TestTime.concat(partTestTime[0].values[i][0]);
+          if(i != 9)
+            TestTime = TestTime.concat(",")
+          CycleTime = CycleTime.concat(partCycleTime[0].values[i][0]);
+          if(i != 9)
+            CycleTime = CycleTime.concat(",")
+          Site = Site.concat(partSite[0].values[i][0]);
+          if(i != 9)
+            Site = Site.concat(",")
+          if(data[i] != undefined)
+          {
+            console.log(data[i]);
+            dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i].data1 + "," + data[i].data2 + "," + data[i].data3 + "," + data[i].data4 + "," + data[i].data5 + "," + data[i].data6 + "," + data[i].data7 + "," + data[i].data8 + "," + data[i].data9 + "," + data[i].data10;
+            console.log("dataHold: ",dataHold[i]);
+          }
+        }
+        console.log("String: ",dataHold[0]);
+        newData = Device + "\n" + Result + "\n" + TestTime + "\n" + CycleTime + "\n" + Site + "\n" + Titles;
+        for(i=0;i<10;i++)
+        {
+          newData = newData + "\n" + dataHold[i];
+        }
+        console.log("new data: ", newData);
+      }
+      return newData;
+    }
 
     const onClick = () => {
       const { db, nextPartNumber, nextPart, nextHeader } = props;
@@ -163,24 +212,17 @@ function BuildTable(props) {
         getTableBodyProps,
         headerGroups,
         page,
-        nextPage,
-        previousPage,
-        canNextPage,
-        canPreviousPage,
-        pageOptions,
-        gotoPage,
-        pageCount,
-        setPageSize,
         prepareRow,
         state,
         setGlobalFilter,
     } = useTable({ columns, data, defaultColumn, globalFilter }, useFilters, useGlobalFilter, usePagination, useFlexLayout)
-    const { globalFilter, pageIndex, pageSize } = state;
+    const { globalFilter } = state;
 
     return (
       <>
       <button onClick={() => onClick()}>Next Part</button>
-      <CSVLink data={data}><button>Download CSV</button></CSVLink>
+      <button>Previous Part</button>
+      <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()} className='whole-table' >
       <thead >
@@ -217,43 +259,6 @@ function BuildTable(props) {
          })}
        </tbody>
      </table>
-     <div className='controls'> 
-      <div className='controls1'>
-        <span className='spaceright'>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page: {' '}
-          <input type='number' defaultValue={pageIndex + 1}
-            onChange={e => {
-              const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(pageNumber)
-            }}
-            style={{ width: '50px' }}
-            />
-        </span>
-      </div>
-      <div className='controls1'>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
-      </div>
-      <div className='controls1'>
-        <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
-          {
-            [10, 25, 50, 100].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))
-          }
-        </select>
-      </div>
-     </div>
      </>
     )
 }
@@ -263,7 +268,12 @@ function mapStateToProps(state) {
   return {
     db: state.db,
     tableData: state.tableData.formattedData,
-    nextPartNumber: state.tableData.nextPartNumber
+    nextPartNumber: state.tableData.nextPartNumber,
+    partNumbers: state.headerData.partNumbers,
+    partOverallResult: state.headerData.partOverallResult, 
+    partTestTime: state.headerData.partTestTime,
+    partCycleTime: state.headerData.partCycleTime,
+    partSite: state.headerData.partSite
   }
 }
 
