@@ -49,7 +49,6 @@ function BuildTable(props) {
             Site = Site.concat(",")
           if(data[i] != undefined)
           {
-            console.log(data[i]);
             dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i].data1 + "," + data[i].data2 + "," + data[i].data3 + "," + data[i].data4 + "," + data[i].data5 + "," + data[i].data6 + "," + data[i].data7 + "," + data[i].data8 + "," + data[i].data9 + "," + data[i].data10;
             console.log("dataHold: ",dataHold[i]);
           }
@@ -60,7 +59,6 @@ function BuildTable(props) {
         {
           newData = newData + "\n" + dataHold[i];
         }
-        console.log("new data: ", newData);
       }
       return newData;
     }
