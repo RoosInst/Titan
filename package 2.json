@@ -1,0 +1,44 @@
+{
+  "name": "titan",
+  "version": "1.0.0",
+  "maine": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev-server": "webpack server"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "amazing-react-charts": "^0.4.6",
+    "convert-array-to-csv": "^2.0.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "node-sass": "^6.0.1",
+    "react": "^17.0.2",
+    "react-csv": "^2.0.3",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.4",
+    "react-loader-spinner": "^4.0.0",
+    "react-redux": "^7.2.4",
+    "react-table": "^7.7.0",
+    "react-tabs": "^3.2.2",
+    "redux": "^4.1.1",
+    "sass-loader": "^12.1.0",
+    "sql.js": "^1.6.1",
+    "style-loader": "^3.2.1",
+    "styled-components": "^5.3.0",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^4.1.1"
+  },
+  "devDependencies": {
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.2.0",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  }
+}

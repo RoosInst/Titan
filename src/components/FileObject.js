@@ -55,6 +55,7 @@ class FileObject extends React.Component {
                     console.log("table name", db.exec("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name"));
                     db.exec("CREATE INDEX resultIndex ON ritdb1(name, entityID)");
 
+                    let start = performance.now();
 
                     let testNames = db.exec(`SELECT value, entityID from ritdb1 WHERE name='RESULT_NAME' limit 10`);
                     console.log('testNames', testNames)
@@ -74,7 +75,7 @@ class FileObject extends React.Component {
                     // let testEntityIds = db.exec(`SELECT entityId FROM ritdb1 WHERE value='PART_RESULT_EVENT' AND name='ENTITY_TYPE' limit 10`);
                     // console.log('testIds', testEntityIds);
 
-                    let partNumbers = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit 30`);
+                    let partNumbers = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit 10`);
                     console.log("part numbers", partNumbers);
 
                     let partOverallResult = db.exec(`SELECT value, entityID from ritdb1 WHERE name='PF' limit 10`);
@@ -103,27 +104,27 @@ class FileObject extends React.Component {
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[8][1]}' AND name='R' limit 10;`
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[9][1]}' AND name='R' limit 10;`);
                     console.log('part results', partTestResults);
-                    let upcomingPartTestResults = db.exec(`SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[10][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[11][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[12][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[13][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[14][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[15][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[16][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[17][1]}' AND name='R' limit 10;`
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[18][1]}' AND name='R' limit 10;`
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[19][1]}' AND name='R' limit 10;`
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[20][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[21][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[22][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[23][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[24][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[25][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[26][1]}' AND name='R' limit 10;` 
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[27][1]}' AND name='R' limit 10;`
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[28][1]}' AND name='R' limit 10;`
-                                                + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[29][1]}' AND name='R' limit 10;`);
-                    console.log('part results', upcomingPartTestResults);
+                    // let upcomingPartTestResults = db.exec(`SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[10][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[11][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[12][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[13][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[14][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[15][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[16][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[17][1]}' AND name='R' limit 10;`
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[18][1]}' AND name='R' limit 10;`
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[19][1]}' AND name='R' limit 10;`
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[20][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[21][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[22][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[23][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[24][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[25][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[26][1]}' AND name='R' limit 10;` 
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[27][1]}' AND name='R' limit 10;`
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[28][1]}' AND name='R' limit 10;`
+                    //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[29][1]}' AND name='R' limit 10;`);
+                    // console.log('part results', upcomingPartTestResults);
 
                     let headerData = {
                         partNumbers,
@@ -138,13 +139,14 @@ class FileObject extends React.Component {
                         testNumbers,
                         testUnits,
                         partTestResults,
-                        upcomingPartTestResults
+                        //upcomingPartTestResults
                     };
 
                     this.props.initializeHeaderData(headerData);
                     this.props.initializeData(tableData);
                     
-
+                    let end = performance.now();
+                    console.log('FIRST TOOK ', (end - start));
                     // testResults[i] = currentResults;
 
                     // if(i == 2916) {
