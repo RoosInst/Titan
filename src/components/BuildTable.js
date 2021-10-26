@@ -21,47 +21,46 @@ function BuildTable(props) {
     //console.info('in BuildTable: ', props.data2)
 
     const getData = () => {
-      return "test";
-    //   let newData = "",i;
-    //   const { partNumbers, partOverallResult, partTestTime, partCycleTime, partSite } = props;
-    //   let Device = ",,Device,";
-    //   let Result= ",,Result,";
-    //   let TestTime= ",,Test Time,";
-    //   let CycleTime = ",,Cycle Time,";
-    //   let Site = ",,Site,";
-    //   let Titles = "Test Name,Units,Test Number,Data 1,Data 2,Data 3,Data 4,Data 5,Data 6,Data 7,Data 8,Data 9,Data 10";
-    //   let dataHold = [];
-    //   if(partNumbers[0] != undefined)
-    //   {
-    //     for(i=0;i<10;i++)
-    //     {
-    //       Device = Device.concat(partNumbers[0].values[i][0]);
-    //       if(i != 9)
-    //         Device = Device.concat(",")
-    //       Result = Result.concat(partOverallResult[0].values[i][0]);
-    //       if(i != 9)
-    //         Result = Result.concat(",")
-    //       TestTime = TestTime.concat(partTestTime[0].values[i][0]);
-    //       if(i != 9)
-    //         TestTime = TestTime.concat(",")
-    //       CycleTime = CycleTime.concat(partCycleTime[0].values[i][0]);
-    //       if(i != 9)
-    //         CycleTime = CycleTime.concat(",")
-    //       Site = Site.concat(partSite[0].values[i][0]);
-    //       if(i != 9)
-    //         Site = Site.concat(",")
-    //       if(data[i] != undefined)
-    //       {
-    //         dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i].data1 + "," + data[i].data2 + "," + data[i].data3 + "," + data[i].data4 + "," + data[i].data5 + "," + data[i].data6 + "," + data[i].data7 + "," + data[i].data8 + "," + data[i].data9 + "," + data[i].data10;
-    //       }
-    //     }
-    //     newData = Device + "\n" + Result + "\n" + TestTime + "\n" + CycleTime + "\n" + Site + "\n" + Titles;
-    //     for(i=0;i<10;i++)
-    //     {
-    //       newData = newData + "\n" + dataHold[i];
-    //     }
-    //   }
-    //   return newData;
+      let newData = "",i;
+      const { partNumbers, partOverallResult, partTestTime, partCycleTime, partSite, nextPartNumber } = props;
+      let Device = ",,Device,";
+      let Result= ",,Result,";
+      let TestTime= ",,Test Time,";
+      let CycleTime = ",,Cycle Time,";
+      let Site = ",,Site,";
+      let Titles = "Test Name,Units,Test Number,Data 1,Data 2,Data 3,Data 4,Data 5,Data 6,Data 7,Data 8,Data 9,Data 10";
+      let dataHold = [];
+      if(partNumbers[0] != undefined)
+      {
+        for(i=0;i<10;i++)
+        {
+          Device = Device.concat(partNumbers[0].values[i][0]);
+          if(i != 9)
+            Device = Device.concat(",")
+          Result = Result.concat(partOverallResult[0].values[i][0]);
+          if(i != 9)
+            Result = Result.concat(",")
+          TestTime = TestTime.concat(partTestTime[0].values[i][0]);
+          if(i != 9)
+            TestTime = TestTime.concat(",")
+          CycleTime = CycleTime.concat(partCycleTime[0].values[i][0]);
+          if(i != 9)
+            CycleTime = CycleTime.concat(",")
+          Site = Site.concat(partSite[0].values[i][0]);
+          if(i != 9)
+            Site = Site.concat(",")
+          if(data[i] != undefined)
+          {
+            dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i][`data${nextPartNumber - 10}`] + "," + data[i][`data${nextPartNumber - 9}`] + "," + data[i][`data${nextPartNumber - 8}`] + "," + data[i][`data${nextPartNumber - 7}`] + "," + data[i][`data${nextPartNumber - 6}`] + "," + data[i][`data${nextPartNumber - 5}`] + "," + data[i][`data${nextPartNumber - 4}`] + "," + data[i][`data${nextPartNumber - 3}`] + "," + data[i][`data${nextPartNumber - 2}`] + "," + data[i][`data${nextPartNumber - 1}`];
+          }
+        }
+        newData = Device + "\n" + Result + "\n" + TestTime + "\n" + CycleTime + "\n" + Site + "\n" + Titles;
+        for(i=0;i<10;i++)
+        {
+          newData = newData + "\n" + dataHold[i];
+        }
+      }
+      return newData;
     }
 
     const onClick = () => {
