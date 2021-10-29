@@ -1,3 +1,5 @@
+import tableData from "../components/tableData";
+
 const formatInitialData = (tableData) => {
     const data = [];
     const { testNames, testUnits, testNumbers, partTestResults } = tableData;
@@ -45,6 +47,31 @@ const formatNextPart = (partNumber, oldTableData, newTableData) => {
     return oldTableData;
 }
 
+const formatTableScroll = (oldTableData, newTableData, nextPartNumber) => {
+    const data = [];
+    const { partTestResults } = newTableData;
+    console.log('partTestResults', partTestResults)
+    console.log(oldTableData.length);
+    for(let j = 0; j < oldTableData.length; j++) {
+        data.push({
+            testName: oldTableData[j].testName,
+            units: oldTableData[j].units,
+            testNum: oldTableData[j].testNum,
+            [`data${nextPartNumber - 10}`]: partTestResults[0].values[j][0],
+            [`data${nextPartNumber - 9}`]: partTestResults[1].values[j][0],
+            [`data${nextPartNumber - 8}`]: partTestResults[2].values[j][0],
+            [`data${nextPartNumber - 7}`]: partTestResults[3].values[j][0],
+            [`data${nextPartNumber - 6}`]: partTestResults[4].values[j][0],
+            [`data${nextPartNumber - 5}`]: partTestResults[5].values[j][0],
+            [`data${nextPartNumber - 4}`]: partTestResults[6].values[j][0],
+            [`data${nextPartNumber - 3}`]: partTestResults[7].values[j][0],
+            [`data${nextPartNumber - 2}`]: partTestResults[8].values[j][0],
+            [`data${nextPartNumber - 1}`]: partTestResults[9].values[j][0]
+        });
+    }
+    return data;
+}
+
 //this function is techincally incomplete because it only changes the part number portion of the header but that's ok for now
 const formatNextHeader = (oldHeaderData, newHeaderData) => {
     console.info('OLD HEADER DATA', oldHeaderData);
@@ -65,4 +92,4 @@ const formatNextHeader = (oldHeaderData, newHeaderData) => {
     return oldHeaderData;
 }
 
-export { formatInitialData, formatNextPart, formatNextHeader };
+export { formatInitialData, formatNextPart, formatNextHeader, formatTableScroll };

@@ -11,3 +11,10 @@ export function nextHeader(newHeaderData) {
         newHeaderData
     }
 }
+
+export function headerScroll(newHeaderData) {
+    return {
+        type: 'HEADER_SCROLL',
+        newHeaderData
+    }
+}

@@ -16,6 +16,9 @@ export default function(state = defaultState, action) {
         case 'NEXT_HEADER':
             return formatNextHeader(state, action.newHeaderData);
 
+        case 'HEADER_SCROLL':
+            return action.newHeaderData
+
         default:
             return state;
     }

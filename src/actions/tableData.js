@@ -11,3 +11,11 @@ export function initializeData(tableData) {
       newTableData
     }
   }
+
+  export function tableScroll(newTableData, nextPartNumber) {
+    return {
+      type: 'TABLE_SCROLL',
+      newTableData,
+      nextPartNumber
+    }
+  }
