@@ -1,14 +1,36 @@
-import React, { Component, useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Draggable from 'react-draggable';
 import { tableScroll } from '../actions/tableData';
 import { headerScroll } from '../actions/headerData';
+import SimpleBar from 'simplebar-react';
+
+import '../../node_modules/simplebar/dist/simplebar.min.css';
 
 const Scrollbar = (props) => {
     const allowQuery = useRef(true);
     const previosPosition = useRef(0);
+    const [width, setWidth] = useState(100);
 
-    const onDrag = (event, data) => {
+    useEffect(() => {
+        const windowWidth = document.getElementById("scroll-container").offsetWidth;
+        const newWidth = 100 + ((1875 / windowWidth) * 100);
+        //console.log(newWidth);
+        setWidth(newWidth);
+    }, []);
+
+    let resize;
+    window.addEventListener('resize', function(event){
+        this.clearTimeout(resize);
+        resize = setTimeout(() => {
+            const windowWidth = document.getElementById("scroll-container").offsetWidth;
+            const newWidth = 100 + ((1875 / windowWidth) * 100);
+            //console.log(newWidth);
+            setWidth(newWidth);
+        }, 600);
+    });
+
+    const onDrag = (event) => {
         if(!allowQuery.current) {
             return;
         } else {
@@ -16,14 +38,14 @@ const Scrollbar = (props) => {
             setTimeout(() => {
                 allowQuery.current = true;
             }, 10);
-            let deltaPosition = data.x - previosPosition.current;
-            previosPosition.current = data.x;
-            console.log('deltaPosition', deltaPosition);
+            let deltaPosition = event.target.scrollLeft - previosPosition.current;
+            previosPosition.current = event.target.scrollLeft;
+            
 
             let start = performance.now();
             const { db, nextPartNumber } = props;
             const actualNextPartNumber = nextPartNumber + deltaPosition;
-
+            console.log(actualNextPartNumber);
             //***************************************************
             //THIS SECTION WILL BE USED WHEN MAKING A SCROLL BAR FOR THE BASE
             // let testNames = db.exec(`SELECT value, entityID from ritdb1 WHERE name='RESULT_NAME' order by name LIMIT 10 OFFSET ${actualNextPartNumber}`);
@@ -86,21 +108,33 @@ const Scrollbar = (props) => {
 
             let end = performance.now();
             console.log('FIRST TOOK ', (end - start));
+            console.log('CURRENT POSITION', event.target.scrollLeft);
+            console.log('DELTA POSITION', deltaPosition);
         }
     }
-
+    
+    // console.log(window.innerWidth)
+    console.log('WIDTH', width)
     return (    
-        <div style={{height: '20px', width: '100%', backgroundColor: "white", position:"relative"}}>
-            <Draggable
-                axis="x"
-                bounds="parent"
-                grid={[.1,.1]}
-                scale={1}
-                onDrag={onDrag}
-            >
-                <div style={{backgroundColor: "gray", width:"10px", height:"20px"}}></div>
-            </Draggable> 
+        
+        //GET THE WIDTH OF THE CONTAINER HOLDING THE SCROLLBAR, THEN CALCULATE PERCENTAGE BASED ON THIS WIDTH
+        <div id="scroll-container" onScroll={onDrag} style={{width: '100%', overflow: 'scroll'}}> 
+            <p id="p" style={{width: `${width}%`}}>.</p>
         </div>
+        
+    
+        
+        // <div style={{height: '20px', width: '100%', backgroundColor: "white", position:"relative"}}>
+        //     <Draggable
+        //         axis="x"
+        //         bounds="parent"
+        //         grid={[.1,.1]}
+        //         scale={1}
+        //         onDrag={onDrag}
+        //     >
+        //         <div style={{backgroundColor: "gray", width:"10px", height:"20px"}}></div>
+        //     </Draggable> 
+        // </div>
     );
 }
 

@@ -192,6 +192,9 @@ function BuildTable(props) {
         prepareRow,
     } = useTable({ columns, data, defaultColumn }, useFlexLayout)
 
+    const onScroll = (event) => {
+      console.log(event.target.scrollLeft)
+    }
 
     return (
       <div>

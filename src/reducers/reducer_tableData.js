@@ -17,7 +17,7 @@ let default_state = {
       data8: "--",
     },
   ],
-  nextPartNumber: 11,
+  nextPartNumber: 0,
   upcomingPartTestResults: []
   //NEED TO ADD A VARIABLE THAT KEEPS TRACK OF HOW MANY TESTS WE HAVE SCROLLED THROUGH
   //    -- THIS WILL BE USED IN THE FUNCTION THAT HANDLES SCROLLING
