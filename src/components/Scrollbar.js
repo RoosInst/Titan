@@ -9,7 +9,6 @@ import '../../node_modules/simplebar/dist/simplebar.min.css';
 
 const Scrollbar = (props) => {
     const allowQuery = useRef(true);
-    const previosPosition = useRef(0);
     const [width, setWidth] = useState(100);
 
     useEffect(() => {
@@ -18,6 +17,10 @@ const Scrollbar = (props) => {
         //console.log(newWidth);
         setWidth(newWidth);
     }, []);
+    
+    useEffect(() => {
+        document.getElementById("scroll-container").scrollLeft += 1;
+    }, [props.nextPartScroll]);
 
     let resize;
     window.addEventListener('resize', function(event){
@@ -38,13 +41,12 @@ const Scrollbar = (props) => {
             setTimeout(() => {
                 allowQuery.current = true;
             }, 10);
-            let deltaPosition = event.target.scrollLeft - previosPosition.current;
-            previosPosition.current = event.target.scrollLeft;
+            const { db, nextPartNumber, prevPartNumber } = props;
+            //let deltaPosition = event.target.scrollLeft - nextPartNumber;
             
             let start = performance.now();
-            const { db, nextPartNumber, prevPartNumber } = props;
-            const actualNextPartNumber = nextPartNumber + deltaPosition;
-            const actualPrevPartNumber = prevPartNumber + deltaPosition;
+            const actualNextPartNumber = event.target.scrollLeft;
+            const actualPrevPartNumber = prevPartNumber;
             console.log(actualNextPartNumber);
             console.log("onDrag Nums:",prevPartNumber,nextPartNumber);
             //***************************************************
@@ -110,7 +112,6 @@ const Scrollbar = (props) => {
             let end = performance.now();
             console.log('FIRST TOOK ', (end - start));
             console.log('CURRENT POSITION', event.target.scrollLeft);
-            console.log('DELTA POSITION', deltaPosition);
         }
     }
     
@@ -281,6 +282,7 @@ const mapStateToProps = (state) => ({
     db: state.db,
     nextPartNumber: state.tableData.nextPartNumber,
     prevPartNumber: state.tableData.prevPartNumber,
+    nextPartScroll: state.tableData.nextPartScroll,
 });
 
 export default connect(mapStateToProps, { tableScroll, headerScroll })(Scrollbar);

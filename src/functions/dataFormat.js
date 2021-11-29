@@ -57,16 +57,16 @@ const formatTableScroll = (oldTableData, newTableData, nextPartNumber) => {
             testName: oldTableData[j].testName,
             units: oldTableData[j].units,
             testNum: oldTableData[j].testNum,
-            [`data${nextPartNumber + 1}`]: partTestResults[0].values[j][0],
-            [`data${nextPartNumber + 2}`]: partTestResults[1].values[j][0],
-            [`data${nextPartNumber + 3}`]: partTestResults[2].values[j][0],
-            [`data${nextPartNumber + 4}`]: partTestResults[3].values[j][0],
-            [`data${nextPartNumber + 5}`]: partTestResults[4].values[j][0],
-            [`data${nextPartNumber + 6}`]: partTestResults[5].values[j][0],
-            [`data${nextPartNumber + 7}`]: partTestResults[6].values[j][0],
-            [`data${nextPartNumber + 8}`]: partTestResults[7].values[j][0],
-            [`data${nextPartNumber + 9}`]: partTestResults[8].values[j][0],
-            [`data${nextPartNumber + 10}`]: partTestResults[9].values[j][0]
+            [`data${nextPartNumber}`]: partTestResults[0].values[j][0],
+            [`data${nextPartNumber + 1}`]: partTestResults[1].values[j][0],
+            [`data${nextPartNumber + 2}`]: partTestResults[2].values[j][0],
+            [`data${nextPartNumber + 3}`]: partTestResults[3].values[j][0],
+            [`data${nextPartNumber + 4}`]: partTestResults[4].values[j][0],
+            [`data${nextPartNumber + 5}`]: partTestResults[5].values[j][0],
+            [`data${nextPartNumber + 6}`]: partTestResults[6].values[j][0],
+            [`data${nextPartNumber + 7}`]: partTestResults[7].values[j][0],
+            [`data${nextPartNumber + 8}`]: partTestResults[8].values[j][0],
+            [`data${nextPartNumber + 9}`]: partTestResults[9].values[j][0]
         });
     }
     return data;
@@ -102,14 +102,18 @@ const formatNextHeader = (oldHeaderData, newHeaderData) => {
     //shifts the header data to the left so that the first item is lost
     //basically identical to formatNextPart logic but using arrays instead of objects
     oldHeaderData.partNumbers[0].values.shift();
-    //oldHeaderData.partCycleTime[0].values.shift();
-    console.log("HERE",oldHeaderData);
-    console.log(newHeaderData);
+    oldHeaderData.partCycleTime[0].values.shift();
+    oldHeaderData.partOverallResult[0].values.shift();
+    oldHeaderData.partSite[0].values.shift();
+    oldHeaderData.partTestTime[0].values.shift();
 
     //pushes the new part number into the array of part numbers
     //again, same logic as formatNextPart but using arrays instead of objects
     oldHeaderData.partNumbers[0].values.push(newHeaderData.newPartNumber);
-    //oldHeaderData.partCycleTime[0].values.push(newHeaderData.newPartCycleTime);
+    oldHeaderData.partCycleTime[0].values.push(newHeaderData.newPartCycleTime);
+    oldHeaderData.partOverallResult[0].values.push(newHeaderData.newPartOverallResult);
+    oldHeaderData.partSite[0].values.push(newHeaderData.newPartSite);
+    oldHeaderData.partTestTime[0].values.push(newHeaderData.newPartTestTime);
     
     //formatPreviousHeader 
     // reverse this logic so that the new data comes at the beginning of the array instead of at the end of it
@@ -122,8 +126,16 @@ const formatNextHeader = (oldHeaderData, newHeaderData) => {
 const formatPrevHeader = (oldHeaderData, newHeaderData) => {
 
     oldHeaderData.partNumbers[0].values.unshift(newHeaderData.newPartNumber);
+    oldHeaderData.partCycleTime[0].values.unshift(newHeaderData.newPartCycleTime);
+    oldHeaderData.partOverallResult[0].values.unshift(newHeaderData.newPartOverallResult);
+    oldHeaderData.partSite[0].values.unshift(newHeaderData.newPartSite);
+    oldHeaderData.partTestTime[0].values.unshift(newHeaderData.newPartTestTime);
 
-    oldHeaderData.partNumbers[0].values.pop()
+    oldHeaderData.partNumbers[0].values.pop();
+    oldHeaderData.partCycleTime[0].values.pop();
+    oldHeaderData.partOverallResult[0].values.pop();
+    oldHeaderData.partSite[0].values.pop();
+    oldHeaderData.partTestTime[0].values.pop();
 
     console.log("1",oldHeaderData);
     console.log("2",newHeaderData);

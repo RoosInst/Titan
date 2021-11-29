@@ -63,6 +63,17 @@ function BuildTable(props) {
       return newData;
     }
 
+    const beginEnd = ( x ) => {
+      if(x == 0)
+      {
+        console.log("begin");
+      }
+      if(x == 1)
+      {
+        console.log("end");
+      }
+    }
+
     const onClick = ( x ) => {
       //test = db.prepare
       //test.step()
@@ -114,19 +125,19 @@ function BuildTable(props) {
 
       //The section enclosed in stars is where the header data is retrieved
       //*********************** 
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='PF' AND entityID='${nextPartNumberResult}'`);
+      test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PF' AND entityID='${nextPartNumberResult}'`);
       test.step();
       let nextPartResult = test.get();
 
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_TEST_TIME' AND entityID='${nextPartNumberResult}'`);
+      test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='EVENT_TEST_TIME' AND entityID='${nextPartNumberResult}'`);
       test.step();
       let nextPartTestTime = test.get();
 
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='EVENT_CYCLE_TIME' AND entityID='${nextPartNumberResult}'`);
+      test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='EVENT_CYCLE_TIME' AND entityID='${nextPartNumberResult}'`);
       test.step();
       let nextPartCycleTime = test.get();
 
-      test = db.prepare(`SELECT value from ritdb1 WHERE name='SITE_ID' AND entityID='${nextPartNumberResult}'`);
+      test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='SITE_ID' AND entityID='${nextPartNumberResult}'`);
       test.step();
       let nextPartSiteId = test.get();
       //*********************** 
@@ -145,10 +156,10 @@ function BuildTable(props) {
       let newHeaderData = {
         nextPartNumber,
         newPartNumber: nextPartNumberHeader,
-        newPartOverallResult: nextPartResult[0],
-        newPartTestTime: nextPartTestTime[0],
-        newPartCycleTime: nextPartCycleTime[0],
-        newPartSite: nextPartSiteId[0]
+        newPartOverallResult: nextPartResult,
+        newPartTestTime: nextPartTestTime,
+        newPartCycleTime: nextPartCycleTime,
+        newPartSite: nextPartSiteId
       };
       //send the object of header data to the headerData reducer so that the header can be formatted
       if(x == 1)
@@ -234,10 +245,10 @@ function BuildTable(props) {
 
     return (
       <div>
-        <button>Beginning</button>
+        <button onClick={() => beginEnd(0)}>Beginning</button>
         <button onClick={() => onClick(0)}>Previous Part</button>
         <button onClick={() => onClick(1)}>Next Part</button>
-        <button>End</button>
+        <button onClick={() => beginEnd(1)}>End</button>
         <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
         <Scrollbar />
         <table {...getTableProps()} className='whole-table' >

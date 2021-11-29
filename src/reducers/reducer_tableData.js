@@ -38,7 +38,8 @@ export default function(state = default_state, action) {
       return {
         formattedData: formatNextPart(state.nextPartNumber, state.formattedData, action.newTableData),
         nextPartNumber: state.nextPartNumber + 1,
-        prevPartNumber: state.prevPartNumber + 1
+        prevPartNumber: state.prevPartNumber + 1,
+        nextPartScroll: state.nextPartNumber + 1,
       }
 
     case 'TABLE_SCROLL':
@@ -46,7 +47,6 @@ export default function(state = default_state, action) {
         formattedData: formatTableScroll(state.formattedData, action.newTableData, action.nextPartNumber),
         nextPartNumber: action.nextPartNumber,
         prevPartNumber: action.prevPartNumber,
-        nextPartScroll: action.nextPartScroll,
       }
 
     case 'PREV_PART':
@@ -57,7 +57,6 @@ export default function(state = default_state, action) {
         }
     case 'ADD_TEST':
       return {...state, test_names: action.test_names, test_results: action.test_results, part_numbers: action.part_numbers, parts_id: action.parts_id, result: action.result, testTime: action.testTime, cycleTime: action.cycleTime, site: action.site}
-
     default:
       return (
         state
