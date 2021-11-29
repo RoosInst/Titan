@@ -72,6 +72,28 @@ const formatTableScroll = (oldTableData, newTableData, nextPartNumber) => {
     return data;
 }
 
+const formatPrevPart = (partNumber, oldTableData, newTableData) => {
+    for(let j = 0; j < oldTableData.length; j++) {
+        //deletes the first data element from the tableData object
+        //uses partNumber-10 to locate the first key
+        //EX:
+        //  data1: 3, data2: 3, data3: 3, .... data10: 3  --->  data2: 3, data3: 3, .... data10: 3
+        //removes data1 from the object
+        delete oldTableData[j][`data${partNumber+10}`];
+
+        //adds a new key and value to the tableData object based on nextPartNumber
+        //EX: 
+        //  data2: 3, data3: 3, .... data10: 3  --->  data2: 3, data3: 3, .... data10: 3, data11: 3
+        oldTableData[j][`data${partNumber}`] = newTableData[0].values[j][0];
+
+        //formatPreviousPart would flip these operations
+        //  it would delete the largest data key from the object and add a new one at the beginning of it
+        //EX:
+        //  data3: 3, .... data13: 3  ---->  data2: 3, .... data12: 3
+    }
+    return oldTableData;
+}
+
 //this function is techincally incomplete because it only changes the part number portion of the header but that's ok for now
 const formatNextHeader = (oldHeaderData, newHeaderData) => {
     console.info('OLD HEADER DATA', oldHeaderData);
@@ -92,4 +114,16 @@ const formatNextHeader = (oldHeaderData, newHeaderData) => {
     return oldHeaderData;
 }
 
-export { formatInitialData, formatNextPart, formatNextHeader, formatTableScroll };
+const formatPrevHeader = (oldHeaderData, newHeaderData) => {
+
+    oldHeaderData.partNumbers[0].values.unshift(newHeaderData.newPartNumber);
+
+    oldHeaderData.partNumbers[0].values.pop()
+
+    console.log("1",oldHeaderData);
+    console.log("2",newHeaderData);
+
+    return oldHeaderData;
+}
+
+export { formatInitialData, formatNextPart, formatPrevPart, formatNextHeader, formatPrevHeader, formatTableScroll };

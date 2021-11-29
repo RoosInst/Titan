@@ -1,4 +1,4 @@
-import { formatNextHeader } from "../functions/dataFormat";
+import { formatNextHeader, formatPrevHeader } from "../functions/dataFormat";
 
 const defaultState = {
     partNumbers: [],
@@ -15,6 +15,9 @@ export default function(state = defaultState, action) {
 
         case 'NEXT_HEADER':
             return formatNextHeader(state, action.newHeaderData);
+            
+        case 'PREV_HEADER':
+            return formatPrevHeader(state, action.newHeaderData);
 
         case 'HEADER_SCROLL':
             return action.newHeaderData

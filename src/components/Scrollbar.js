@@ -104,7 +104,7 @@ const Scrollbar = (props) => {
             };
 
             props.headerScroll(headerData);
-            props.tableScroll(tableData, actualNextPartNumber);
+            props.tableScroll(tableData, actualNextPartNumber, actualPrevPartNumber);
 
             let end = performance.now();
             console.log('FIRST TOOK ', (end - start));
@@ -278,7 +278,8 @@ const Scrollbar = (props) => {
 
 const mapStateToProps = (state) => ({
     db: state.db,
-    nextPartNumber: state.tableData.nextPartNumber
+    nextPartNumber: state.tableData.nextPartNumber,
+    prevPartNumber: state.tableData.prevPartNumber,
 });
 
 export default connect(mapStateToProps, { tableScroll, headerScroll })(Scrollbar);

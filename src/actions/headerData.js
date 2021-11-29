@@ -15,6 +15,13 @@ export function nextHeader(newHeaderData) {
 export function headerScroll(newHeaderData) {
     return {
         type: 'HEADER_SCROLL',
+        newHeaderData,
+    }
+}
+
+export function prevHeader(newHeaderData) {
+    return {
+        type: 'PREV_HEADER',
         newHeaderData
     }
 }

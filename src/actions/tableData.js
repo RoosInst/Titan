@@ -12,10 +12,19 @@ export function initializeData(tableData) {
     }
   }
 
-  export function tableScroll(newTableData, nextPartNumber) {
+  export function tableScroll(newTableData, nextPartNumber, prevPartNumber, nextPartScroll) {
     return {
       type: 'TABLE_SCROLL',
       newTableData,
-      nextPartNumber
+      nextPartNumber,
+      prevPartNumber,
+      nextPartScroll,
+    }
+  }
+  
+  export function prevPart(newTableData) {
+    return {
+      type: 'PREV_PART',
+      newTableData
     }
   }

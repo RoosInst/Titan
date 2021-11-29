@@ -5,8 +5,8 @@ import GlobalFilter from './GlobalFilter';
 import Part from './Part';
 import PartInfo from './PartInfo';
 import Scrollbar from './Scrollbar';
-import { nextPart } from '../actions/tableData';
-import { nextHeader } from '../actions/headerData';
+import { nextPart, prevPart } from '../actions/tableData';
+import { nextHeader, prevHeader } from '../actions/headerData';
 import { CSVLink } from 'react-csv';
 import { compose } from 'redux';
 import tableData from './tableData';
@@ -63,7 +63,7 @@ function BuildTable(props) {
       return newData;
     }
 
-    const onClick = () => {
+    const onClick = ( x ) => {
       //test = db.prepare
       //test.step()
       //test.get()
@@ -74,16 +74,25 @@ function BuildTable(props) {
       //  - previousPartNumber (declared in reducer_tableData)
       //  - previousPart (decalred in actions/tableData)
       //  - previousHeader (declared in action/headerData)
-      const { db, nextPartNumber, nextPart, nextHeader } = props;
-
+      const { db, nextPartNumber, prevPartNumber, nextPart, prevPart, nextHeader, prevHeader } = props;
+      console.log("prev",prevPartNumber,nextPartNumber);
       //begins keeping track of how long queries took to complete
       let start = performance.now();
 
       //Gets the EntityId of the next part based on nextPartNumber
       //This entityId is what is used to retrieve test results, test time, etc for the given part
-      let test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+      let test;
+      if(x == 1)
+      {
+        test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+      }
+      if(x == 0)
+      {
+        test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${prevPartNumber}, 1`);
+      }
       test.step();
       let nextPartNumberResult = test.get()[1];
+      console.log("Number Res:",nextPartNumberResult);
 
       //EnitityId that is used in the headerData section
       let nextPartNumberHeader = test.get();
@@ -112,7 +121,14 @@ function BuildTable(props) {
       //*********************** 
 
       //the test results are sent to the tableData reducer so that the data can be formatted
-      nextPart(nextPartTestResults);
+      if(x == 1)
+      {
+        nextPart(nextPartTestResults);
+      }
+      if(x == 0)
+      {
+        prevPart(nextPartTestResults);
+      }
 
       //created an object out of the header data that you received
       let newHeaderData = {
@@ -124,7 +140,14 @@ function BuildTable(props) {
         newPartSite: nextPartSiteId[0]
       };
       //send the object of header data to the headerData reducer so that the header can be formatted
-      nextHeader(newHeaderData);
+      if(x == 1)
+      {
+        nextHeader(newHeaderData);
+      }
+      if(x == 0)
+      {
+        prevHeader(newHeaderData);
+      }
 
       //shows how long the queries took to complete
       let end = performance.now();
@@ -198,8 +221,10 @@ function BuildTable(props) {
 
     return (
       <div>
-        <button>Previous Part</button>
-        <button onClick={() => onClick()}>Next Part</button>
+        <button></button>
+        <button onClick={() => onClick(0)}>Previous Part</button>
+        <button onClick={() => onClick(1)}>Next Part</button>
+        <button></button>
         <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
         <Scrollbar />
         <table {...getTableProps()} className='whole-table' >
@@ -239,6 +264,7 @@ function mapStateToProps(state) {
     db: state.db,
     tableData: state.tableData.formattedData,
     nextPartNumber: state.tableData.nextPartNumber,
+    prevPartNumber: state.tableData.prevPartNumber,
     partNumbers: state.headerData.partNumbers,
     partOverallResult: state.headerData.partOverallResult, 
     partTestTime: state.headerData.partTestTime,
@@ -247,4 +273,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { nextPart, nextHeader })(BuildTable);
+export default connect(mapStateToProps, { nextPart, prevPart, nextHeader, prevHeader })(BuildTable);
