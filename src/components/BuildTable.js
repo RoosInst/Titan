@@ -75,7 +75,18 @@ function BuildTable(props) {
       //  - previousPart (decalred in actions/tableData)
       //  - previousHeader (declared in action/headerData)
       const { db, nextPartNumber, prevPartNumber, nextPart, prevPart, nextHeader, prevHeader } = props;
-      console.log("prev",prevPartNumber,nextPartNumber);
+      length = db.exec(`SELECT max(value) FROM ritdb1 WHERE name='PART_ID_OUT'`);
+      length = length[0].values[0];
+      console.log("length",length);
+      if(prevPartNumber == 0 && x == 0)
+      {
+        return 0;
+      } 
+      else if(nextPartNumber + 10 >= length && x == 1)
+      {
+        return 0;
+      }
+      console.log("prev",prevPartNumber,nextPartNumber + 10);
       //begins keeping track of how long queries took to complete
       let start = performance.now();
 
@@ -84,7 +95,7 @@ function BuildTable(props) {
       let test;
       if(x == 1)
       {
-        test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber}, 1`);
+        test = db.prepare(`SELECT value, entityID from ritdb1 WHERE name='PART_ID' GROUP BY value limit ${nextPartNumber + 10}, 1`);
       }
       if(x == 0)
       {
@@ -182,7 +193,9 @@ function BuildTable(props) {
 
       let dataColumns = [];
       for(let x=0; x < 10; x++) {
-        let newNumber = `data${props.nextPartNumber - (10 - x)}`;
+        let value = props.nextPartNumber + x;
+        let newNumber = `data${value}`;
+        console.log("NEW NUMBER", newNumber);
         dataColumns.push(
           {
             Header: () => (<Part partNum={x} />),
@@ -199,7 +212,7 @@ function BuildTable(props) {
 
       let dataObject = 
         {
-          Header: "hello",
+          Header: "",
           accessor: "scrollbar",
           columns: dataColumns
         };
@@ -221,10 +234,10 @@ function BuildTable(props) {
 
     return (
       <div>
-        <button></button>
+        <button>Beginning</button>
         <button onClick={() => onClick(0)}>Previous Part</button>
         <button onClick={() => onClick(1)}>Next Part</button>
-        <button></button>
+        <button>End</button>
         <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
         <Scrollbar />
         <table {...getTableProps()} className='whole-table' >

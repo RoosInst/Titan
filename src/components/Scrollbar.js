@@ -41,11 +41,12 @@ const Scrollbar = (props) => {
             let deltaPosition = event.target.scrollLeft - previosPosition.current;
             previosPosition.current = event.target.scrollLeft;
             
-
             let start = performance.now();
-            const { db, nextPartNumber } = props;
+            const { db, nextPartNumber, prevPartNumber } = props;
             const actualNextPartNumber = nextPartNumber + deltaPosition;
+            const actualPrevPartNumber = prevPartNumber + deltaPosition;
             console.log(actualNextPartNumber);
+            console.log("onDrag Nums:",prevPartNumber,nextPartNumber);
             //***************************************************
             //THIS SECTION WILL BE USED WHEN MAKING A SCROLL BAR FOR THE BASE
             // let testNames = db.exec(`SELECT value, entityID from ritdb1 WHERE name='RESULT_NAME' order by name LIMIT 10 OFFSET ${actualNextPartNumber}`);
