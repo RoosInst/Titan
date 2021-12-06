@@ -51,7 +51,7 @@ function BuildTable(props) {
             Site = Site.concat(",")
           if(data[i] != undefined)
           {
-            dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i][`data${nextPartNumber - 10}`] + "," + data[i][`data${nextPartNumber - 9}`] + "," + data[i][`data${nextPartNumber - 8}`] + "," + data[i][`data${nextPartNumber - 7}`] + "," + data[i][`data${nextPartNumber - 6}`] + "," + data[i][`data${nextPartNumber - 5}`] + "," + data[i][`data${nextPartNumber - 4}`] + "," + data[i][`data${nextPartNumber - 3}`] + "," + data[i][`data${nextPartNumber - 2}`] + "," + data[i][`data${nextPartNumber - 1}`];
+            dataHold[i] = data[i].testName + "," + data[i].units + "," + data[i].testNum + "," + data[i][`data${nextPartNumber + 9}`] + "," + data[i][`data${nextPartNumber + 8}`] + "," + data[i][`data${nextPartNumber + 7}`] + "," + data[i][`data${nextPartNumber + 6}`] + "," + data[i][`data${nextPartNumber + 5}`] + "," + data[i][`data${nextPartNumber + 4}`] + "," + data[i][`data${nextPartNumber + 3}`] + "," + data[i][`data${nextPartNumber + 2}`] + "," + data[i][`data${nextPartNumber + 1}`] + "," + data[i][`data${nextPartNumber }`];
           }
         }
         newData = Device + "\n" + Result + "\n" + TestTime + "\n" + CycleTime + "\n" + Site + "\n" + Titles;
@@ -72,6 +72,7 @@ function BuildTable(props) {
       {
         console.log("end");
       }
+
     }
 
     const onClick = ( x ) => {
