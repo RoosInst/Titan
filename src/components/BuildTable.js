@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useTable, useGlobalFilter, useFilters, useFlexLayout, usePagination, useAsyncDebounce } from 'react-table';
-import GlobalFilter from './GlobalFilter';
+import { useTable, useFlexLayout } from 'react-table';
 import Part from './Part';
 import PartInfo from './PartInfo';
 import Scrollbar from './Scrollbar';
 import { nextPart, prevPart } from '../actions/tableData';
 import { nextHeader, prevHeader } from '../actions/headerData';
 import { CSVLink } from 'react-csv';
-import { compose } from 'redux';
-import tableData from './tableData';
 
 function BuildTable(props) {
   let data = props.tableData;

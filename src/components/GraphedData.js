@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { CoordinateLineChart, DonutChart, LineChart } from 'amazing-react-charts';
+import { Doughnut } from 'react-chartjs-2';
+import 'chart.js/auto';
 
 function GraphedData(props) {
     if(props.db.db != undefined)
@@ -14,20 +15,36 @@ function GraphedData(props) {
         let totalTest = passData + failData;
         let ppass = (passData/totalTest)*100;
         let pfail = (failData/totalTest)*100;
+        const data = {
+            labels: ['Passed', 'Failed'],
+            datasets: [
+              {
+                label: 'Pass/Fail',
+                data: [ppass, pfail],
+                backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 1,
+              },
+            ],
+          };
         allData = allData[0].values.flat(1);
         console.log(allData.slice(0,10));
         return (
-            <div>
-                <DonutChart
-                    noAnimation
-                    colors={['green', 'red']}
-                    legendPosition="outside"
-                    center={['50%', '50%']}
-                    donutRadius={['40%', '70%']}
-                    data={[
-                        { name: 'Passed', value: ppass.toFixed(1) },
-                        { name: 'Failed', value: pfail.toFixed(1) },
-                    ]}
+            <div className="over-div">
+                <Doughnut 
+                    data={data}
+                    width="300"
+                    height="300"
+                    options={{
+                        responsive: false,
+                        maintainAspectRatio: false,
+                    }}
                 />
             </div>
         );
