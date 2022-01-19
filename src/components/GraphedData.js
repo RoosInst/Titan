@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 function GraphedData(props) {
@@ -10,12 +10,13 @@ function GraphedData(props) {
         let allData = db.exec(`SELECT value FROM ritdb1 WHERE name='R' AND value2='PV' OR value2='FV'`);
         let passData = db.exec(`SELECT value FROM ritdb1 WHERE value='PASS' AND name='PF'`);
         let failData = db.exec(`SELECT value FROM ritdb1 WHERE value='FAIL' AND name='PF'`);
-        passData = passData[0].values.length;
-        failData = failData[0].values.length;
-        let totalTest = passData + failData;
-        let ppass = (passData/totalTest)*100;
-        let pfail = (failData/totalTest)*100;
-        const data = {
+        console.log("Pass!",passData);
+        let ppass = passData[0].values.length;
+        let pfail = failData[0].values.length;
+        let totalTest = ppass + pfail;
+        ppass = (ppass/totalTest)*100;
+        pfail = (pfail/totalTest)*100;
+        const doughnutData = {
             labels: ['Passed', 'Failed'],
             datasets: [
               {
@@ -33,12 +34,38 @@ function GraphedData(props) {
               },
             ],
           };
+          const lineData = {
+            label: 'Tests',
+            datasets: [
+              {
+                label: 'Pass Values',
+                data: passData[0].values,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+              {
+                label: 'Fail Values',
+                data: failData[0].values,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+            ],
+          };
         allData = allData[0].values.flat(1);
         console.log(allData.slice(0,10));
         return (
             <div className="over-div">
                 <Doughnut 
-                    data={data}
+                    data={doughnutData}
+                    width="300"
+                    height="300"
+                    options={{
+                        responsive: false,
+                        maintainAspectRatio: false,
+                    }}
+                />
+                <Line
+                    data={lineData}
                     width="300"
                     height="300"
                     options={{
