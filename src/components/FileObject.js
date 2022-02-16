@@ -93,7 +93,20 @@ class FileObject extends React.Component {
                     let upcomingPartSite = db.exec(`SELECT value, entityID from ritdb1 WHERE name='SITE_ID' limit 10, 20`);
                     console.log('upcomingSite', upcomingPartSite);
 
-                    let partTestResults = db.exec(`SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[0][1]}' AND name='R' limit 10;` 
+                    let numberOfParts = partNumbers[0].values.length;
+                    console.log("NUMBER OF PARTS", numberOfParts);
+                    if(numberOfParts >= 10) {
+                        numberOfParts = 10;
+                    }
+
+                    let command = '';
+                    for(let i=0;i<numberOfParts;i++) {
+                        command += `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[i][1]}' AND name='R' limit 10;`
+                    }
+
+                    let partTestResults = db.exec(command);
+                    console.log('part results', partTestResults);
+                    /*db.exec(`SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[0][1]}' AND name='R' limit 10;` 
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[1][1]}' AND name='R' limit 10;` 
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[2][1]}' AND name='R' limit 10;` 
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[3][1]}' AND name='R' limit 10;` 
@@ -103,7 +116,7 @@ class FileObject extends React.Component {
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[7][1]}' AND name='R' limit 10;` 
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[8][1]}' AND name='R' limit 10;`
                                                 + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[9][1]}' AND name='R' limit 10;`);
-                    console.log('part results', partTestResults);
+                    console.log('part results', partTestResults);*/
                     // let upcomingPartTestResults = db.exec(`SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[10][1]}' AND name='R' limit 10;` 
                     //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[11][1]}' AND name='R' limit 10;` 
                     //                             + `SELECT value FROM ritdb1 WHERE EntityId='${partNumbers[0].values[12][1]}' AND name='R' limit 10;` 
