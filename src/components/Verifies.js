@@ -9,10 +9,16 @@ function Verifies(props) {
         const db = props.db;
         let UL = db.exec(`SELECT value, indexID from ritdb1 WHERE name='UL'`);
         console.log("UpperLimit", UL);
-        UL = UL[0].values;
+        if(UL)
+        {
+            UL = UL[0].values;
+        }
         let LL = db.exec(`SELECT value, indexID from ritdb1 WHERE name='LL'`);
         console.log("LowerLimit", LL);
-        LL = LL[0].values;
+        if(LL)
+        {
+            LL = LL[0].values;
+        }
         let Data = db.exec(`SELECT value, indexID from ritdb1 WHERE name='R'`);
         console.log("VerifyData",Data);
         for(i=0;i<Data[0].values.length;i++)
@@ -21,23 +27,22 @@ function Verifies(props) {
             LLval = null;
             for(j=0;j<UL.length;j++)
             {
-                if(UL[j][1] == Data[0].values[i][1])
+                if(UL && UL[j][1] == Data[0].values[i][1])
                 {
                     ULval = UL[j][0];
                 }
-                if(LL[j][1] == Data[0].values[i][1])
+                if(LL && LL[j][1] == Data[0].values[i][1])
                 {
                     LLval = LL[j][0];
                 }
             }
-            console.log("LLval:",LLval,"ULval:",ULval,"Data Point:",Data[0].values[i][0]);
-            if(ULval == null || LLval == null)
+            if(ULval == null && LLval == null)
             {
                 continue;
             }
             else if(Data[0].values[i][0] > ULval || Data[0].values[i][0] < LLval)
             {
-                console.log("Failed at",Data[0].values[i][0],UL[i][0],LL[i][0]);
+                console.log("Failed at",Data[0].values[i][0],ULval,LLval);
                 PorF = "Fail";
                 break;
             }
@@ -55,7 +60,7 @@ function Verifies(props) {
             return (
                 <div>
                     <p className='PorF-F'>{PorF}</p>
-                    <p className='F-note'>Failed at Data point: {Data[0].values[i][0]} with UL: {UL[i][0]} and LL: {LL[i][0]}</p>
+                    <p className='F-note'>Failed at Data point: {Data[0].values[i][0]} with UL: {ULval} and LL: {LLval}</p>
                 </div>
             );
         }
