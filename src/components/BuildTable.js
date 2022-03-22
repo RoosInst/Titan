@@ -240,45 +240,55 @@ function BuildTable(props) {
     const onScroll = (event) => {
       console.log(event.target.scrollLeft)
     }
-
-    return (
-      <div>
-        <button onClick={() => beginEnd(0)}>Beginning</button>
-        <button onClick={() => onClick(0)}>Previous Part</button>
-        <button onClick={() => onClick(1)}>Next Part</button>
-        <button onClick={() => beginEnd(1)}>End</button>
-        <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
-        <Scrollbar />
-        <table {...getTableProps()} className='whole-table' >
-        <thead >
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  className='table-header'
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-                })}
+    if(props.db.db != undefined)
+    {
+      return (
+        <div>
+          <button onClick={() => beginEnd(0)}>Beginning</button>
+          <button onClick={() => onClick(0)}>Previous Part</button>
+          <button onClick={() => onClick(1)}>Next Part</button>
+          <button onClick={() => beginEnd(1)}>End</button>
+          <CSVLink data={getData()}><button>Download CSV</button></CSVLink>
+          <Scrollbar />
+          <table {...getTableProps()} className='whole-table' >
+          <thead >
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className='table-header'
+                  >
+                    {column.render('Header')}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-     </div>
-    )
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      )
+    }
+    else
+    {
+      return (
+          <div>
+              <h3>Please upload file</h3>
+          </div>
+      )
+    }    
 }
 
 function mapStateToProps(state) {
