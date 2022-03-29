@@ -20,7 +20,7 @@ const default_state = { columns: [
 export default function(state = { data: [], dd_data: [] }, action){
     switch(action.type) {
         case 'ADD_DATA':
-            return { data: [ ...data, action.data ], dd_data: [ ...dd_data, action.dd_data ] };
+            return { data: [ ...state.data, action.data ], dd_data: [ ...state.dd_data, action.dd_data ] };
         default:
             return state;
     }
